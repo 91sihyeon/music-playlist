@@ -10,7 +10,7 @@ body.dark-mode { --bg: #121212; --card: #1f1f1f; --text: #f0f0f0; --sub: #a0a0a0
 body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 15px; transition: 0.3s; }
 .container { max-width: 500px; margin: 0 auto; }
 
-/* 메인 제목 애니메이션 */
+/* 1. 메인 제목 애니메이션 */
 .header h1 { 
     text-align: center; font-size: 24px; font-weight: 800; margin-bottom: 25px; 
     color: var(--text); opacity: 0.8; 
@@ -18,12 +18,13 @@ body { background: var(--bg); color: var(--text); font-family: sans-serif; paddi
 }
 @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
+/* 2. 검색창 클릭 시 확대 방지 (font-size: 16px 추가) */
 .search-container { margin-bottom: 20px; }
-#searchInput { width: 100%; padding: 12px; border-radius: 20px; border: 1px solid #ddd; background: var(--card); color: var(--text); box-sizing: border-box; }
+#searchInput { width: 100%; padding: 12px; border-radius: 20px; border: 1px solid #ddd; background: var(--card); color: var(--text); box-sizing: border-box; font-size: 16px; }
 .btn { padding: 8px 15px; border-radius: 15px; border: none; background: #eee; cursor: pointer; transition: 0.3s; font-size: 14px; color: #555; }
 body.dark-mode .btn { background: #333; color: #ccc; }
 
-/* 카드 애니메이션 및 이퀄라이저 바 */
+/* 3. 카드 애니메이션 및 이퀄라이저 바 */
 .song-item { 
     background: var(--card); border-radius: 15px; padding: 15px; margin-bottom: 12px; 
     box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
@@ -33,7 +34,7 @@ body.dark-mode .btn { background: #333; color: #ccc; }
 
 .artist { font-size: 12px; color: var(--sub); margin-bottom: 6px; display: flex; align-items: center; }
 
-/* 3개 막대기 애니메이션 */
+/* 막대기 애니메이션 */
 .equalizer { display: flex; align-items: flex-end; gap: 2px; height: 12px; margin-right: 8px; }
 .bar { width: 3px; background: var(--note); animation: sound 0.8s infinite ease-in-out; }
 .bar:nth-child(1) { height: 8px; animation-delay: 0.1s; }
@@ -73,7 +74,7 @@ body.dark-mode .circle-btn { background: #333; color: #bbb; }
 <div class="footer">© MADE BY LEPOREM</div>  
 
 <script>
-const playlistData = [ /* ... 기존 데이터와 동일 ... */ 
+const playlistData = [
   { artist: "강승윤", songs: "본능적으로" }, { artist: "구윤회", songs: "Marry Me" }, { artist: "길구봉구", songs: "이별" },
   { artist: "김건모", songs: "서울의 달 / 이별이 준 선물 / 빗속의 연인 / 미안해요 / 청첩장" },
   { artist: "김광석(故)", songs: "서른즈음에" }, { artist: "김기태", songs: "비연" }, { artist: "김동률", songs: "감사 / 기억의 습작" },
