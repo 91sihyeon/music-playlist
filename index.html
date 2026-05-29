@@ -284,20 +284,20 @@ body{
 
 <script>
 
-// 기본 테마를 방송용 다크모드로 우선 지정
-document.documentElement.setAttribute('data-theme', 'dark');
+// 기본 테마를 라이트 모드로 변경
+document.documentElement.setAttribute('data-theme', 'light');
 
 // 테마 토글 함수
 function toggleTheme() {
   const currentTheme = document.documentElement.getAttribute('data-theme');
   const btn = document.getElementById('themeToggleBtn');
   
-  if (currentTheme === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'light');
-    btn.innerHTML = '🌙 다크 모드';
-  } else {
+  if (currentTheme === 'light') {
     document.documentElement.setAttribute('data-theme', 'dark');
-    btn.innerHTML = '☀️ 라이트 모드';
+    btn.innerHTML = '☀️ 라이트 모드'; // 다크모드가 되면 '라이트모드로 바꾸는 버튼' 표시
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    btn.innerHTML = '🌙 다크 모드';  // 라이트모드가 되면 '다크모드로 바꾸는 버튼' 표시
   }
 }
 
