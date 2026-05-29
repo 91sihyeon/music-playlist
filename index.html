@@ -103,7 +103,7 @@ body {
   box-shadow: 0 0 12px var(--neon);
 }
 
-/* 헤더 디자인: 미드나잇 딥 네이비 그라데이션 및 이퀄라이저 */
+/* 헤더 디자인 */
 .header {
   text-align: center;
   margin: 15px 0 35px;
@@ -204,7 +204,7 @@ body {
   transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ⚡ 카드 우측 배경에 들어가는 임팩트 있는 '오디오 주파수 파형(Wave)' 컨테이너 */
+/* ⚡ 카드 우측 배경의 오디오 주파수 파형(Wave) */
 .card-wave {
   display: flex;
   align-items: center;
@@ -218,7 +218,6 @@ body {
   z-index: 0;
 }
 
-/* 주파수 막대기 개별 디자인 (기본 상태는 차분한 테마색 반영) */
 .card-wave span {
   display: block;
   width: 3px;
@@ -228,7 +227,6 @@ body {
   transition: 0.3s ease;
 }
 
-/* 주파수 파형을 들쭉날쭉 오디오 볼륨 커브 형태로 배치 */
 .card-wave span:nth-child(1) { height: 10px; }
 .card-wave span:nth-child(2) { height: 25px; }
 .card-wave span:nth-child(3) { height: 15px; }
@@ -237,34 +235,32 @@ body {
 .card-wave span:nth-child(6) { height: 30px; }
 .card-wave span:nth-child(7) { height: 12px; }
 
-/* 마우스를 올렸을 때 전체 카드 액션 */
-.song-item:hover {
+/* 마우스 호버 및 모바일 터치 액션 */
+.song-item:hover, .song-item:active {
   background: var(--card-hover);
   border-color: var(--accent);
   transform: translateY(-3px);
   box-shadow: 0 8px 20px rgba(15, 20, 28, 0.08), 0 0 15px var(--neon);
 }
 
-/* ⚡ 마우스를 올리면 주파수가 네온 컬러로 켜지며 역동적으로 비트를 타기 시작함 */
-.song-item:hover .card-wave span {
+.song-item:hover .card-wave span, .song-item:active .card-wave span {
   background: linear-gradient(to top, var(--eq-start), var(--eq-end));
   opacity: 1;
   animation: waveBeat 0.6s infinite alternate;
   box-shadow: 0 0 4px var(--eq-start);
 }
 
-/* 막대마다 애니메이션 속도와 딜레이를 다르게 주어 리얼한 비트감 연출 */
-.song-item:hover .card-wave span:nth-child(1) { animation-delay: 0.1s; animation-duration: 0.4s; }
-.song-item:hover .card-wave span:nth-child(2) { animation-delay: 0.3s; animation-duration: 0.5s; }
-.song-item:hover .card-wave span:nth-child(3) { animation-delay: 0.0s; animation-duration: 0.3s; }
-.song-item:hover .card-wave span:nth-child(4) { animation-delay: 0.4s; animation-duration: 0.6s; }
-.song-item:hover .card-wave span:nth-child(5) { animation-delay: 0.2s; animation-duration: 0.4s; }
-.song-item:hover .card-wave span:nth-child(6) { animation-delay: 0.5s; animation-duration: 0.5s; }
-.song-item:hover .card-wave span:nth-child(7) { animation-delay: 0.1s; animation-duration: 0.3s; }
+.song-item:hover .card-wave span:nth-child(1), .song-item:active .card-wave span:nth-child(1) { animation-delay: 0.1s; animation-duration: 0.4s; }
+.song-item:hover .card-wave span:nth-child(2), .song-item:active .card-wave span:nth-child(2) { animation-delay: 0.3s; animation-duration: 0.5s; }
+.song-item:hover .card-wave span:nth-child(3), .song-item:active .card-wave span:nth-child(3) { animation-delay: 0.0s; animation-duration: 0.3s; }
+.song-item:hover .card-wave span:nth-child(4), .song-item:active .card-wave span:nth-child(4) { animation-delay: 0.4s; animation-duration: 0.6s; }
+.song-item:hover .card-wave span:nth-child(5), .song-item:active .card-wave span:nth-child(5) { animation-delay: 0.2s; animation-duration: 0.4s; }
+.song-item:hover .card-wave span:nth-child(6), .song-item:active .card-wave span:nth-child(6) { animation-delay: 0.5s; animation-duration: 0.5s; }
+.song-item:hover .card-wave span:nth-child(7), .song-item:active .card-wave span:nth-child(7) { animation-delay: 0.1s; animation-duration: 0.3s; }
 
 @keyframes waveBeat {
   0% { transform: scaleY(1); }
-  100% { transform: scaleY(0.4); } /* 위아래로 역동적으로 압축/이완 */
+  100% { transform: scaleY(0.4); }
 }
 
 /* 아티스트 표시 */
@@ -281,11 +277,12 @@ body {
   z-index: 1;
 }
 
+/* 노래 전체 컨테이너: 우측 파형 영역(약 50px)을 침범하지 않도록 마진 확보 */
 .songs-container {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  width: 80%; /* 파형과 겹치지 않도록 너비 확보 */
+  margin-right: 55px; 
   position: relative;
   z-index: 1;
 }
@@ -307,7 +304,7 @@ body {
   transition: 0.2s;
 }
 
-.song-item:hover .song-tag {
+.song-item:hover .song-tag, .song-item:active .song-tag {
   background: var(--card);
   color: var(--text);
   border-color: var(--line);
@@ -330,16 +327,21 @@ body {
   letter-spacing: 1px;
 }
 
-/* 모바일 대응 화면 */
+/* 📱 모바일 대응 화면 최적화 */
 @media (max-width: 480px) {
   body { padding: 16px 12px 40px; }
   .header h1 { font-size: 26px; }
   .equalizer { width: 18px; height: 18px; gap: 2px; }
   @keyframes bounce { 0% { height: 3px; } 100% { height: 16px; } }
   .search-box input { padding: 15px 16px; font-size: 14px; border-radius: 12px; }
+  
+  /* 모바일에서도 카드가 찌그러지지 않고 파형이 예쁘게 배치되도록 조정 */
   .song-item { padding: 14px 16px; border-radius: 12px; }
-  .card-wave { display: none; } /* 화면이 작은 모바일에서는 숨겨서 깔끔하게 유지 */
-  .songs-container { width: 100%; }
+  .songs-container { margin-right: 40px; } /* 오른쪽 파형 자리를 살짝 좁혀서 확보 */
+  
+  /* 모바일용 파형 위치 및 크기 축소 조절 (글자와 절대 겹치지 않음) */
+  .card-wave { right: 12px; scale: 0.85; } 
+  
   .artist { font-size: 13px; margin-bottom: 10px; }
   .song-tag { font-size: 12px; padding: 6px 12px; border-radius: 6px; }
 }
@@ -350,10 +352,12 @@ body {
 
 <div class="container">
 
+  <!-- 화면 모드 전환 선택 버튼 -->
   <div class="top-controls">
     <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">🌙 다크 모드</button>
   </div>
 
+  <!-- 헤더 -->
   <div class="header">
     <div class="header-title-wrap">
       <div class="equalizer"><span></span><span></span><span></span></div>
@@ -362,6 +366,7 @@ body {
     </div>
   </div>
 
+  <!-- 검색창 -->
   <div class="search-box">
     <input
       type="text"
@@ -371,6 +376,7 @@ body {
     />
   </div>
 
+  <!-- 플레이리스트 결과창 -->
   <div class="playlist" id="playlist"></div>
 
   <div class="empty" id="empty">
@@ -384,10 +390,8 @@ body {
 </div>
 
 <script>
-// 기본 테마를 라이트 모드로 설정
 document.documentElement.setAttribute('data-theme', 'light');
 
-// 테마 토글 함수
 function toggleTheme() {
   const currentTheme = document.documentElement.getAttribute('data-theme');
   const btn = document.getElementById('themeToggleBtn');
@@ -585,12 +589,11 @@ function render(data){
       .map(song => song.trim());
 
     const tagsHTML = songList.map(song =>
-      `<span class="song-tag">🎵 ${song}</span>`
+      `<span class="song-tag">${song}</span>`
     ).join("");
 
-    /* HTML 내부에 동적으로 주파수 막대기들(span)을 생성해 줍니다 */
     div.innerHTML = `
-      <div class="artist">🎤 ${item.artist}</div>
+      <div class="artist">🎵 ${item.artist}</div>
       <div class="songs-container">
         ${tagsHTML}
       </div>
