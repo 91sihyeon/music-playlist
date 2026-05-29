@@ -6,7 +6,7 @@
 <title>🎵 황시현 PLAY LIST 🎵</title>
 
 <style>
-/* 🍦 파스텔 톤 웜톤 라이트 모드 */
+/* 🍦 감성적인 파스텔 톤 웜톤 라이트 모드 */
 :root[data-theme="light"] {
   --bg: #f7f4eb;
   --card: #ffffff;
@@ -15,19 +15,21 @@
   --sub: #70655e;
   --line: #e8e2d5;
   --accent: #2e4468;
-  /* 🎨 [수정] 라이트 모드 제목: 가독성을 위해 더 진한 차콜 브라운 조합 */
-  --gradient-start: #2d2825;
-  --gradient-end: #4a423d;
-  --eq-start: #ffb7b2;
-  --eq-end: #d1b3ff;
+  --gradient-start: #6a6270; /* 묵직하고 차분한 제목 색 */
+  --gradient-end: #8a7f92;
+  
+  /* 🎨 [변경됨] 주파수 움직임: 파스텔 피치 & 소프트 라벤더 그라데이션 */
+  --eq-start: #ffb7b2;         /* 파스텔 피치 핑크 */
+  --eq-end: #d1b3ff;          /* 파스텔 소프트 라벤더 */
+  
   --tag-bg: #f1ede2;
   --tag-text: #4a3f38;
   --shadow: rgba(36, 31, 28, 0.05);
-  --neon: rgba(255, 183, 178, 0.3);
-  --disc-opacity: 0.4;
+  --neon: rgba(255, 183, 178, 0.3); /* 파스텔톤의 부드러운 광원 */
+  --disc-opacity: 0.4;         /* 파형 기본 투명도를 살짝 높여 더 잘 보이게 수정 */
 }
 
-/* 🍫 묵직한 다크 모드 */
+/* 🍫 묵직하고 따뜻한 다크 모드 */
 :root[data-theme="dark"] {
   --bg: #141211;
   --card: #1e1b19;
@@ -36,11 +38,13 @@
   --sub: #9c8e85;
   --line: #2d2825;
   --accent: #b8c9e5;
-  /* 🎨 [수정] 다크 모드 제목: 배경과 대비되도록 밝은 톤의 실버 화이트 조합 */
-  --gradient-start: #e0d7cf;
-  --gradient-end: #b8c9e5;
-  --eq-start: #a18cd1;
+  --gradient-start: #88808c;
+  --gradient-end: #a8a0b0;
+  
+  /* 다크모드 주파수 */
+  --eq-start: #a18cd1;         
   --eq-end: #fbc2eb;
+  
   --tag-bg: #292422;
   --tag-text: #e0d7cf;
   --shadow: rgba(0, 0, 0, 0.5);
@@ -48,30 +52,355 @@
   --disc-opacity: 0.25;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 24px 16px 50px; transition: 0.4s; }
-.container { max-width: 680px; margin: 0 auto; }
-.header { text-align: center; margin: 15px 0 35px; }
-.header h1 { font-size: 32px; font-weight: 900; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.search-box input { width: 100%; background: var(--card); border: 1px solid var(--line); color: var(--text); padding: 18px 20px; border-radius: 16px; margin-bottom: 24px; outline: none; }
-.song-item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; margin-bottom: 14px; position: relative; transition: 0.3s; }
-.artist { font-size: 14px; font-weight: 800; color: var(--accent); margin-bottom: 12px; }
-.songs-container { display: flex; flex-wrap: wrap; gap: 8px; margin-right: 50px; }
-.song-tag { background: var(--tag-bg); color: var(--tag-text); padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; }
-.card-wave { display: flex; gap: 3px; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); pointer-events: none; }
-.card-wave span { width: 3px; height: 15px; background: var(--eq-start); opacity: var(--disc-opacity); border-radius: 2px; }
-.song-item:hover .card-wave span { animation: waveBeat 0.6s infinite alternate; opacity: 1; }
-@keyframes waveBeat { 0% { height: 10px; } 100% { height: 35px; } }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding: 24px 16px 50px;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* 상단 화면 모드 선택 컨트롤 */
+.top-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+.theme-toggle-btn {
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 6px var(--shadow);
+  transition: 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--card-hover);
+  border-color: var(--eq-start);
+  box-shadow: 0 0 12px var(--neon);
+}
+
+/* 헤더 디자인 */
+.header {
+  text-align: center;
+  margin: 15px 0 35px;
+  position: relative;
+}
+
+.header-title-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.header h1 {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 상단 미니 오디오 이퀄라이저 */
+.equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  width: 24px;
+  height: 24px;
+}
+
+.equalizer span {
+  display: block;
+  width: 4px;
+  background: linear-gradient(to top, var(--eq-start), var(--eq-end));
+  animation: bounce 0.8s infinite alternate;
+  border-radius: 2px;
+  box-shadow: 0 0 4px var(--eq-start);
+}
+.equalizer span:nth-child(2) { animation-delay: 0.2s; animation-duration: 0.5s; }
+.equalizer span:nth-child(3) { animation-delay: 0.4s; animation-duration: 0.7s; }
+
+@keyframes bounce {
+  0% { height: 4px; }
+  100% { height: 22px; }
+}
+
+.header::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 4px;
+  margin: 16px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--eq-start), var(--eq-end));
+}
+
+/* 검색창 디자인 */
+.search-box {
+  margin-bottom: 24px;
+}
+
+.search-box input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 18px 20px;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  outline: none;
+  box-shadow: 0 4px 10px var(--shadow);
+  transition: 0.3s ease;
+}
+
+.search-box input:focus {
+  border-color: var(--eq-start);
+  box-shadow: 0 0 0 4px rgba(138, 43, 226, 0.1), 0 4px 14px var(--neon);
+}
+
+/* 플레이리스트 목록 카드 디자인 */
+.playlist {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.song-item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 4px 12px var(--shadow);
+  position: relative;
+  overflow: hidden;
+  transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ⚡ 카드 우측 배경의 오디오 주파수 파형(Wave) */
+.card-wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.card-wave span {
+  display: block;
+  width: 3px;
+  background: var(--sub);
+  opacity: var(--disc-opacity);
+  border-radius: 2px;
+  transition: 0.3s ease;
+}
+
+.card-wave span:nth-child(1) { height: 10px; }
+.card-wave span:nth-child(2) { height: 25px; }
+.card-wave span:nth-child(3) { height: 15px; }
+.card-wave span:nth-child(4) { height: 35px; }
+.card-wave span:nth-child(5) { height: 20px; }
+.card-wave span:nth-child(6) { height: 30px; }
+.card-wave span:nth-child(7) { height: 12px; }
+
+/* 마우스 호버 및 모바일 터치 액션 */
+.song-item:hover, .song-item:active {
+  background: var(--card-hover);
+  border-color: var(--eq-start);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(36, 31, 28, 0.05), 0 0 15px var(--neon);
+}
+
+.song-item:hover .card-wave span, .song-item:active .card-wave span {
+  background: linear-gradient(to top, var(--eq-start), var(--eq-end));
+  opacity: 1;
+  animation: waveBeat 0.6s infinite alternate;
+  box-shadow: 0 0 4px var(--eq-start);
+}
+
+.song-item:hover .card-wave span:nth-child(1), .song-item:active .card-wave span:nth-child(1) { animation-delay: 0.1s; animation-duration: 0.4s; }
+.song-item:hover .card-wave span:nth-child(2), .song-item:active .card-wave span:nth-child(2) { animation-delay: 0.3s; animation-duration: 0.5s; }
+.song-item:hover .card-wave span:nth-child(3), .song-item:active .card-wave span:nth-child(3) { animation-delay: 0.0s; animation-duration: 0.3s; }
+.song-item:hover .card-wave span:nth-child(4), .song-item:active .card-wave span:nth-child(4) { animation-delay: 0.4s; animation-duration: 0.6s; }
+.song-item:hover .card-wave span:nth-child(5), .song-item:active .card-wave span:nth-child(5) { animation-delay: 0.2s; animation-duration: 0.4s; }
+.song-item:hover .card-wave span:nth-child(6), .song-item:active .card-wave span:nth-child(6) { animation-delay: 0.5s; animation-duration: 0.5s; }
+.song-item:hover .card-wave span:nth-child(7), .song-item:active .card-wave span:nth-child(7) { animation-delay: 0.1s; animation-duration: 0.3s; }
+
+@keyframes waveBeat {
+  0% { transform: scaleY(1); }
+  100% { transform: scaleY(0.4); }
+}
+
+/* 아티스트 표시 */
+.artist {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent); 
+  margin-bottom: 12px;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+/* 노래 전체 컨테이너 */
+.songs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-right: 55px; 
+  position: relative;
+  z-index: 1;
+}
+
+/* 노래 태그 디자인 */
+.song-tag {
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 8px;
+  line-height: 1.4;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  word-break: break-all; 
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: 0.2s;
+}
+
+.song-item:hover .song-tag, .song-item:active .song-tag {
+  background: var(--card);
+  color: var(--text);
+  border-color: var(--line);
+}
+
+.empty {
+  display: none;
+  text-align: center;
+  color: var(--sub);
+  padding: 80px 20px;
+  font-weight: 600;
+}
+
+.footer {
+  margin-top: 45px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sub);
+  letter-spacing: 1px;
+}
+
+/* 📱 모바일 대응 화면 최적화 */
+@media (max-width: 480px) {
+  body { padding: 16px 12px 40px; }
+  .header h1 { font-size: 26px; }
+  .equalizer { width: 18px; height: 18px; gap: 2px; }
+  @keyframes bounce { 0% { height: 3px; } 100% { height: 16px; } }
+  .search-box input { padding: 15px 16px; font-size: 14px; border-radius: 12px; }
+  
+  .song-item { padding: 14px 16px; border-radius: 12px; }
+  .songs-container { margin-right: 40px; } 
+  
+  .card-wave { right: 12px; scale: 0.85; } 
+  
+  .artist { font-size: 13px; margin-bottom: 10px; }
+  .song-tag { font-size: 12px; padding: 6px 12px; border-radius: 6px; }
+}
 </style>
 </head>
+
 <body>
+
 <div class="container">
-  <div class="header"><h1>🎵 황시현 PLAY LIST 🎵</h1></div>
-  <div class="search-box"><input type="text" id="searchInput" placeholder="가수 또는 노래 제목 검색..." oninput="filterSongs()"></div>
-  <div id="playlist"></div>
+
+  <!-- 화면 모드 전환 선택 버튼 -->
+  <div class="top-controls">
+    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">🌙 다크 모드</button>
+  </div>
+
+  <!-- 헤더 -->
+  <div class="header">
+    <div class="header-title-wrap">
+      <div class="equalizer"><span></span><span></span><span></span></div>
+      <h1>🎵 황시현 PLAY LIST 🎵</h1>
+      <div class="equalizer"><span></span><span></span><span></span></div>
+    </div>
+  </div>
+
+  <!-- 검색창 -->
+  <div class="search-box">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="가수 또는 노래 제목 검색..."
+      oninput="filterSongs()"
+    />
+  </div>
+
+  <!-- 플레이리스트 결과창 -->
+  <div class="playlist" id="playlist"></div>
+
+  <div class="empty" id="empty">
+    검색 결과가 없습니다 🥲
+  </div>
+
+  <div class="footer">
+    © MADE BY HWANG SI HYUN
+  </div>
+
 </div>
 
 <script>
+document.documentElement.setAttribute('data-theme', 'light');
+
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const btn = document.getElementById('themeToggleBtn');
+  
+  if (currentTheme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    btn.innerHTML = '☀️ 라이트 모드';
+  } else {
+    document.documentElement.setAttribute('data-theme', 'light');
+    btn.innerHTML = '🌙 다크 모드';
+  }
+}
+
+// 노래 목록 데이터
 const playlistData = [
   { artist: "강승윤", songs: "본능적으로" },
   { artist: "구윤회", songs: "Marry Me" },
@@ -233,25 +562,61 @@ const playlistData = [
   { artist: "WOODZ(우즈)", songs: "AMNESIA" }
 ];
 
-function render(data) {
-  const container = document.getElementById("playlist");
-  container.innerHTML = data.map(item => `
-    <div class="song-item">
+const playlist = document.getElementById("playlist");
+const empty = document.getElementById("empty");
+
+function render(data){
+  playlist.innerHTML = "";
+
+  if(data.length === 0){
+    empty.style.display = "block";
+    return;
+  }
+
+  empty.style.display = "none";
+
+  data.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "song-item";
+
+    const songList = item.songs
+      .split("/")
+      .map(song => song.trim());
+
+    const tagsHTML = songList.map(song =>
+      `<span class="song-tag">${song}</span>`
+    ).join("");
+
+    div.innerHTML = `
       <div class="artist">🎵 ${item.artist}</div>
       <div class="songs-container">
-        ${item.songs.split("/").map(s => `<span class="song-tag">${s.trim()}</span>`).join("")}
+        ${tagsHTML}
       </div>
-      <div class="card-wave"><span></span><span></span><span></span></div>
-    </div>
-  `).join("");
+      <div class="card-wave">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+      </div>
+    `;
+
+    playlist.appendChild(div);
+  });
 }
 
-function filterSongs() {
-  const keyword = document.getElementById("searchInput").value.toLowerCase();
-  render(playlistData.filter(i => i.artist.toLowerCase().includes(keyword) || i.songs.toLowerCase().includes(keyword)));
+function filterSongs(){
+  const keyword = document
+    .getElementById("searchInput")
+    .value
+    .toLowerCase();
+
+  const filtered = playlistData.filter(item =>
+    item.artist.toLowerCase().includes(keyword) ||
+    item.songs.toLowerCase().includes(keyword)
+  );
+
+  render(filtered);
 }
 
 render(playlistData);
 </script>
+
 </body>
 </html>
