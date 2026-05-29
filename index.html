@@ -5,28 +5,49 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>🎵 황시현 PLAY LIST 🎵</title>
 <style>
-:root { --bg: #f7f4eb; --card: #ffffff; --text: #241f1c; --sub: #5c5460; --accent: #2e4468; --eq-start: #ffb7b2; --eq-end: #d1b3ff; --tag-bg: #f1ede2; --tag-text: #4a3f38; }
-body.dark-mode { --bg: #121212; --card: #1f1f1f; --text: #ffffff; --sub: #e0e0e0; --tag-bg: #3d3d3d; --tag-text: #ffffff; }
+:root { --bg: #f7f4eb; --card: #ffffff; --text: #241f1c; --sub: #5c5460; --accent: #2e4468; --tag-bg: #f1ede2; --tag-text: #4a3f38; --note: #b8a99c; }
+body.dark-mode { --bg: #121212; --card: #1f1f1f; --text: #f0f0f0; --sub: #a0a0a0; --tag-bg: #2d2d2d; --tag-text: #d0d0d0; --note: #706a65; }
 body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 15px; transition: 0.3s; }
 .container { max-width: 500px; margin: 0 auto; }
-.header h1 { text-align: center; font-size: 24px; font-weight: 800; margin-bottom: 25px; background: linear-gradient(135deg, #ff9e99 0%, #b892ff 100%); -webkit-background-clip: text; color: transparent; animation: floating 3s infinite ease-in-out; }
+
+/* 메인 제목 애니메이션 */
+.header h1 { 
+    text-align: center; font-size: 24px; font-weight: 800; margin-bottom: 25px; 
+    color: var(--text); opacity: 0.8; 
+    animation: floating 3s infinite ease-in-out; 
+}
 @keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
 
-/* 검색창 스타일 */
 .search-container { margin-bottom: 20px; }
-#searchInput { width: 100%; padding: 12px; border-radius: 20px; border: 1px solid #ccc; background: var(--card); color: var(--text); box-sizing: border-box; }
-.btn { padding: 8px 15px; border-radius: 15px; border: none; background: #ddd; cursor: pointer; transition: 0.3s; font-size: 14px; }
-body.dark-mode .btn { background: #333; color: #fff; }
+#searchInput { width: 100%; padding: 12px; border-radius: 20px; border: 1px solid #ddd; background: var(--card); color: var(--text); box-sizing: border-box; }
+.btn { padding: 8px 15px; border-radius: 15px; border: none; background: #eee; cursor: pointer; transition: 0.3s; font-size: 14px; color: #555; }
+body.dark-mode .btn { background: #333; color: #ccc; }
 
-.song-item { background: var(--card); border-radius: 15px; padding: 15px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-.artist { font-weight: bold; color: var(--sub); margin-bottom: 8px; font-size: 15px; }
-.artist::before { content: "🎵 "; color: #ffb7b2; } 
-body.dark-mode .artist::before { color: #ff9e99; }
-.song-tag { display: inline-block; background: var(--tag-bg); color: var(--tag-text); padding: 4px 10px; border-radius: 12px; margin-right: 5px; margin-bottom: 5px; font-size: 12px; }
+/* 카드 애니메이션 및 이퀄라이저 바 */
+.song-item { 
+    background: var(--card); border-radius: 15px; padding: 15px; margin-bottom: 12px; 
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+.song-item:hover { transform: translateX(10px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
-/* 고정 버튼 그룹 (홈 + 위로가기) */
-.fixed-btns { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; }
-.circle-btn { width: 45px; height: 45px; border-radius: 50%; background: var(--accent); color: white; border: none; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
+.artist { font-size: 12px; color: var(--sub); margin-bottom: 6px; display: flex; align-items: center; }
+
+/* 3개 막대기 애니메이션 */
+.equalizer { display: flex; align-items: flex-end; gap: 2px; height: 12px; margin-right: 8px; }
+.bar { width: 3px; background: var(--note); animation: sound 0.8s infinite ease-in-out; }
+.bar:nth-child(1) { height: 8px; animation-delay: 0.1s; }
+.bar:nth-child(2) { height: 12px; animation-delay: 0.2s; }
+.bar:nth-child(3) { height: 6px; animation-delay: 0.3s; }
+@keyframes sound { 0%, 100% { height: 4px; } 50% { height: 12px; } }
+
+.song-tag { display: inline-block; background: var(--tag-bg); color: var(--tag-text); padding: 5px 12px; border-radius: 12px; margin-right: 5px; margin-bottom: 5px; font-size: 15px; font-weight: bold; }
+
+.fixed-btns { position: fixed; bottom: 20px; right: 20px; }
+.circle-btn { width: 45px; height: 45px; border-radius: 50%; background: #ddd; color: #555; border: none; cursor: pointer; font-size: 18px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+body.dark-mode .circle-btn { background: #333; color: #bbb; }
+
+.footer { text-align: center; margin-top: 40px; padding: 20px; font-size: 12px; color: #aaa; }
 </style>
 </head>
 <body>
@@ -45,16 +66,16 @@ body.dark-mode .artist::before { color: #ff9e99; }
   <div id="playlist"></div>
 </div>
 
-<!-- 고정 버튼 영역 -->
 <div class="fixed-btns">
-  <button class="circle-btn" onclick="resetPlaylist()" title="홈으로">🏠</button>
   <button class="circle-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="위로 가기">▲</button>
 </div>
 
+<div class="footer">© MADE BY LEPOREM</div>  
+
 <script>
-const playlistData = [
+const playlistData = [ /* ... 기존 데이터와 동일 ... */ 
   { artist: "강승윤", songs: "본능적으로" }, { artist: "구윤회", songs: "Marry Me" }, { artist: "길구봉구", songs: "이별" },
-  { artist: "김건모", songs: "서울의 달 / 이별이 준 선물/ 빗속의 연인 / 미안해요 / 청첩장" },
+  { artist: "김건모", songs: "서울의 달 / 이별이 준 선물 / 빗속의 연인 / 미안해요 / 청첩장" },
   { artist: "김광석(故)", songs: "서른즈음에" }, { artist: "김기태", songs: "비연" }, { artist: "김동률", songs: "감사 / 기억의 습작" },
   { artist: "김범수", songs: "끝사랑" }, { artist: "김연우", songs: "이별택시 / You Are My Love" }, { artist: "김영근", songs: "탈진" },
   { artist: "김정훈", songs: "상처" }, { artist: "김필", songs: "기댈곳 / 괴수 / 다시 사랑한다면" }, { artist: "나비", songs: "길에서" },
@@ -108,7 +129,7 @@ const playlistData = [
   { artist: "K.WILL(케이윌)", songs: "눈물이 뚝뚝 / 이러지마 제발" }, { artist: "M TO M(엠투엠)", songs: "사랑한다 말해줘 / 이름" }, { artist: "M.N.J(엠엔제이)", songs: "후애" },
   { artist: "M.Street(엠스트리트)", songs: "For My Love" }, { artist: "MC THE MAX(엠씨더맥스)", songs: "그대는 눈물겹다 / 해바라기도 가끔 목이 아프죠 / 서시" },
   { artist: "SG워너비", songs: "Timeless / STAY / 다른 사랑 만나도 / 광 / 사랑하길 정말 잘했어요 / 살다가" }, { artist: "Spapa(에스파파)", songs: "참 다행이다" },
-  { artist: "V.O.S(브이오에스)", songs: "부디" }, { artist: "V.One(브이원)", songs: "그런가봐요 / 면도 " }, { artist: "WOODZ(우즈)", songs: "AMNESIA" }
+  { artist: "V.O.S(브이오에스)", songs: "부디" }, { artist: "V.One(브이원)", songs: "그런가봐요 / 면도" }, { artist: "WOODZ(우즈)", songs: "AMNESIA" }
 ];
 
 function toggleTheme() {
@@ -124,27 +145,19 @@ function filterPlaylist() {
   render(filtered);
 }
 
-function resetPlaylist() {
-  document.getElementById("searchInput").value = "";
-  render();
-}
-
 function render(data = playlistData) {
   const container = document.getElementById("playlist");
   container.innerHTML = data.map(item => `
     <div class="song-item">
-      <div class="artist">${item.artist}</div>
+      <div class="artist">
+        <div class="equalizer"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+        ${item.artist}
+      </div>
       <div>${item.songs.split("/").map(s => `<span class="song-tag">${s.trim()}</span>`).join("")}</div>
     </div>
   `).join("");
 }
 render();
 </script>
-</div>  <!-- container 끝 -->
-
-<!-- ✅ 여기 추가 -->
-<div class="footer">
-  © MADE BY LEPOREM
-</div>  
 </body>
 </html>
