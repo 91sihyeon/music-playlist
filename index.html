@@ -8,9 +8,9 @@
 <style>
 :root {
   --bg: #f7f4eb;
-  --card: #ffffff; /* 라이트 모드 카드 색 */
-  --text: #241f1c;
-  --sub: #70655e;
+  --card: #ffffff;
+  --text: #241f1c; /* 기본 진한 갈색 */
+  --sub: #5c5460;   /* 가수 이름 색상 */
   --accent: #2e4468;
   --eq-start: #ffb7b2;
   --eq-end: #d1b3ff;
@@ -19,17 +19,17 @@
 }
 body.dark-mode {
   --bg: #121212;
-  --card: #1f1f1f; /* 다크 모드 카드 배경색(더 어둡고 고급스럽게) */
-  --text: #ffffff;
-  --sub: #b3b3b3;
-  --tag-bg: #333333; /* 태그 배경 */
-  --tag-text: #e0e0e0; /* 태그 글씨 */
+  --card: #1f1f1f;
+  --text: #ffffff;   /* 제목/본문 흰색 */
+  --sub: #e0e0e0;    /* 가수 이름 밝은 회색으로 변경 (가독성 향상) */
+  --tag-bg: #3d3d3d;
+  --tag-text: #ffffff;
 }
 
 body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 15px; transition: 0.3s; }
 .container { max-width: 500px; margin: 0 auto; }
 
-/* 🌟 제목: 더 밝고 화사하게 */
+/* 🌟 제목 */
 .header h1 { 
     text-align: center; font-size: 24px; font-weight: 800; margin-bottom: 25px;
     background: linear-gradient(135deg, #ff9e99 0%, #b892ff 100%);
@@ -43,18 +43,21 @@ body { background: var(--bg); color: var(--text); font-family: sans-serif; paddi
 body.dark-mode .btn { background: #333; color: #fff; }
 
 .song-item { 
-    background: var(--card); /* 설정한 변수 적용 */
-    border-radius: 15px; padding: 15px; margin-bottom: 12px; 
-    box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: relative;
-    transition: 0.3s;
+    background: var(--card); border-radius: 15px; padding: 15px; margin-bottom: 12px; 
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2); position: relative;
 }
+
+/* 🎵 다크 모드에서 음표 아이콘 색상 변경 */
 .artist { font-weight: bold; color: var(--sub); margin-bottom: 8px; font-size: 15px; }
+.artist::before { content: "🎵 "; color: #ffb7b2; } 
+body.dark-mode .artist::before { color: #ff9e99; } /* 다크 모드에서 더 밝은 핑크색 음표 */
+
 .song-tag { 
     display: inline-block; background: var(--tag-bg); color: var(--tag-text); 
     padding: 4px 10px; border-radius: 12px; margin-right: 5px; margin-bottom: 5px; font-size: 12px;
 }
 
-/* 주파수 효과 */
+/* 주파수 */
 .card-wave { display: flex; gap: 3px; position: absolute; right: 15px; top: 20px; }
 .card-wave span { width: 3px; height: 12px; background: linear-gradient(var(--eq-start), var(--eq-end)); border-radius: 2px; }
 .song-item:hover .card-wave span { animation: wave 0.6s infinite alternate; }
@@ -76,6 +79,7 @@ body.dark-mode .btn { background: #333; color: #fff; }
 <button class="top-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})">▲</button>
 
 <script>
+// 데이터는 이전과 동일
 const playlistData = [
   { artist: "강승윤", songs: "본능적으로" }, { artist: "구윤회", songs: "Marry Me" }, { artist: "길구봉구", songs: "이별" },
   { artist: "김건모", songs: "서울의 달 / 이별이 준 선물/ 빗속의 연인 / 미안해요 / 청첩장" },
@@ -139,7 +143,7 @@ function render() {
   const container = document.getElementById("playlist");
   container.innerHTML = playlistData.map(item => `
     <div class="song-item">
-      <div class="artist">🎵 ${item.artist}</div>
+      <div class="artist">${item.artist}</div>
       <div>${item.songs.split("/").map(s => `<span class="song-tag">${s.trim()}</span>`).join("")}</div>
       <div class="card-wave"><span></span><span></span><span></span></div>
     </div>
