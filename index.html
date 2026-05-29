@@ -6,51 +6,51 @@
 <title>🎵 황시현 PLAY LIST 🎵</title>
 
 <style>
-/* 기본으로 적용될 고급스러운 딥 네이비 라이트 모드 */
+/* 🍦 감성적이고 따뜻한 웜톤 라이트 모드 (밀크 아이보리) */
 :root[data-theme="light"] {
-  --bg: #f1f4f9;               /* 은은한 네이비 빛이 감도는 세련된 배경색 */
+  --bg: #f7f4eb;               /* 부드럽고 차분한 느낌의 메인 웜 아이보리 배경 */
   --card: #ffffff;             /* 깔끔한 화이트 카드 */
-  --card-hover: #e9eef7;       /* 마우스 올렸을 때 부드러운 네이비 블루 */
-  --text: #0f141c;             /* 본문 글자색: 거의 검은색에 가까운 초고밀도 네이비 */
-  --sub: #566171;              /* 서브 글자색: 차분한 네이비 그레이 */
-  --line: #dbdfeb;             /* 경계선: 연하고 깔끔한 라인 */
+  --card-hover: #f1ede2;       /* 마우스 올렸을 때 살짝 더 깊어지는 아이보리 베이지 */
+  --text: #241f1c;             /* 본문 글자색: 완전히 까맣지 않은 따뜻한 다크 브라운 네이비 */
+  --sub: #70655e;              /* 서브 글자색: 아늑한 내추럴 브라운 그레이 */
+  --line: #e8e2d5;             /* 경계선: 아이보리와 잘 어우러지는 연한 베이지 라인 */
   
-  /* 💙 네이비 그라데이션 효과를 내는 핵심 컬러 */
-  --accent: #15305b;           /* 가수 이름: 깊고 선명한 클래식 딥 네이비 */
-  --gradient-start: #0a1931;   /* 상단 제목 시작: 묵직한 미드나잇 네이비 */
-  --gradient-end: #1e3d6b;     /* 상단 제목 끝: 청량하고 세련된 로열 네이비 */
+  /* ✨ 웜톤에 맞춰 조금 더 깊고 고급스럽게 조율한 강조 컬러 */
+  --accent: #2e4468;           /* 가수 이름: 아이보리와 찰떡인 차분한 톤다운 네이비 */
+  --gradient-start: #1b2d4a;   /* 상단 제목 시작 */
+  --gradient-end: #3b567d;     /* 상단 제목 끝 */
   
   /* ⚡ 이퀄라이저 및 우측 파형 포인트 컬러 (라이트모드) */
-  --eq-start: #00d2ff;         /* 청량한 네온 사이언 블루 */
-  --eq-end: #00f2fe;           /* 밝고 트렌디한 민트 블루 */
+  --eq-start: #ff7b00;         /* 웜톤에 고급스럽게 튀는 네온 오렌지 */
+  --eq-end: #ffae00;           /* 산뜻한 네온 옐로우 */
   
-  --tag-bg: #f0f3f8;           /* 노래 태그 배경 */
-  --tag-text: #2c3a4f;         /* 노래 태그 글자색: 톤다운된 네이비 */
-  --shadow: rgba(15, 20, 28, 0.04);
+  --tag-bg: #f1ede2;           /* 노래 태그 배경: 톤다운 베이지 */
+  --tag-text: #4a3f38;         /* 노래 태그 글자색 */
+  --shadow: rgba(36, 31, 28, 0.05);
   --neon: transparent;
-  --disc-opacity: 0.15;        /* 파형 기본 투명도 */
+  --disc-opacity: 0.2;         /* 파형 기본 투명도 */
 }
 
-/* 선택 시 전환되는 방송용 묵직한 네이비 다크 모드 */
+/* 🍫 완전 블랙을 배제한 묵직하고 따뜻한 다크 모드 (웜 다크 숯색) */
 :root[data-theme="dark"] {
-  --bg: #070a10;               /* 심해처럼 깊은 네이비 블랙 */
-  --card: #111622;             /* 다크 네이비 카드 */
-  --card-hover: #192133;       /* 밝아지는 네이비 카드 */
-  --text: #ffffff;
-  --sub: #8593a6;
-  --line: #20293a;
-  --accent: #9cb6df;           /* 다크모드 강조색: 부드러운 파스텔 네이비 블루 */
-  --gradient-start: #e2ecf8;
-  --gradient-end: #9cb6df;
+  --bg: #141211;               /* 칠흑 같은 블랙이 아닌, 약간의 온기가 도는 고급스러운 웜 다크 */
+  --card: #1e1b19;             /* 웜 다크 초콜릿 브라운 톤의 카드 배경 */
+  --card-hover: #292422;       /* 마우스 올렸을 때 은은하게 밝아지는 카드 */
+  --text: #f5f0eb;             /* 다크모드 본문: 눈이 편안한 웜 화이트 */
+  --sub: #9c8e85;              /* 다크모드 서브: 부드러운 토프 그레이 */
+  --line: #2d2825;             /* 다크모드 경계선 */
+  --accent: #b8c9e5;           /* 다크모드 강조색: 매트한 파스텔 블루 */
+  --gradient-start: #f5f0eb;
+  --gradient-end: #b8c9e5;
   
   /* ⚡ 이퀄라이저 및 우측 파형 포인트 컬러 (다크모드) */
-  --eq-start: #00f2fe;         
-  --eq-end: #4facfe;           /* 다크모드에서는 조금 더 짙고 선명한 네온 블루 */
+  --eq-start: #ff9f43;         
+  --eq-end: #ff6b6b;           /* 다크모드에서는 타오르는 듯한 감성적인 네온 웜 컬러 */
   
-  --tag-bg: #1b2436;
-  --tag-text: #cbd5e1;
-  --shadow: rgba(0, 0, 0, 0.4);
-  --neon: rgba(156, 182, 223, 0.15);
+  --tag-bg: #292422;
+  --tag-text: #e0d7cf;
+  --shadow: rgba(0, 0, 0, 0.5);
+  --neon: rgba(255, 159, 67, 0.15);
   --disc-opacity: 0.25;
 }
 
@@ -183,7 +183,7 @@ body {
 
 .search-box input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(21, 48, 91, 0.1), 0 4px 14px var(--neon);
+  box-shadow: 0 0 0 4px rgba(255, 123, 0, 0.1), 0 4px 14px var(--neon);
 }
 
 /* 플레이리스트 목록 카드 디자인 */
@@ -240,7 +240,7 @@ body {
   background: var(--card-hover);
   border-color: var(--accent);
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(15, 20, 28, 0.08), 0 0 15px var(--neon);
+  box-shadow: 0 8px 20px rgba(36, 31, 28, 0.08), 0 0 15px var(--neon);
 }
 
 .song-item:hover .card-wave span, .song-item:active .card-wave span {
@@ -277,7 +277,7 @@ body {
   z-index: 1;
 }
 
-/* 노래 전체 컨테이너: 우측 파형 영역(약 50px)을 침범하지 않도록 마진 확보 */
+/* 노래 전체 컨테이너 */
 .songs-container {
   display: flex;
   flex-wrap: wrap;
@@ -335,11 +335,9 @@ body {
   @keyframes bounce { 0% { height: 3px; } 100% { height: 16px; } }
   .search-box input { padding: 15px 16px; font-size: 14px; border-radius: 12px; }
   
-  /* 모바일에서도 카드가 찌그러지지 않고 파형이 예쁘게 배치되도록 조정 */
   .song-item { padding: 14px 16px; border-radius: 12px; }
-  .songs-container { margin-right: 40px; } /* 오른쪽 파형 자리를 살짝 좁혀서 확보 */
+  .songs-container { margin-right: 40px; } 
   
-  /* 모바일용 파형 위치 및 크기 축소 조절 (글자와 절대 겹치지 않음) */
   .card-wave { right: 12px; scale: 0.85; } 
   
   .artist { font-size: 13px; margin-bottom: 10px; }
