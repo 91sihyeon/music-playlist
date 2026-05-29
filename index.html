@@ -6,7 +6,7 @@
 <title>🎵 황시현 PLAY LIST 🎵</title>
 
 <style>
-/* 🍦 감성적인 파스텔 톤 웜톤 라이트 모드 */
+/* 🍦 파스텔 톤 웜톤 라이트 모드 */
 :root[data-theme="light"] {
   --bg: #f7f4eb;
   --card: #ffffff;
@@ -15,21 +15,18 @@
   --sub: #70655e;
   --line: #e8e2d5;
   --accent: #2e4468;
-  --gradient-start: #6a6270; /* 묵직하고 차분한 제목 색 */
+  --gradient-start: #6a6270;
   --gradient-end: #8a7f92;
-  
-  /* 🎨 [변경됨] 주파수 움직임: 파스텔 피치 & 소프트 라벤더 그라데이션 */
-  --eq-start: #ffb7b2;         /* 파스텔 피치 핑크 */
-  --eq-end: #d1b3ff;          /* 파스텔 소프트 라벤더 */
-  
+  --eq-start: #ffb7b2;
+  --eq-end: #d1b3ff;
   --tag-bg: #f1ede2;
   --tag-text: #4a3f38;
   --shadow: rgba(36, 31, 28, 0.05);
-  --neon: rgba(255, 183, 178, 0.3); /* 파스텔톤의 부드러운 광원 */
-  --disc-opacity: 0.4;         /* 파형 기본 투명도를 살짝 높여 더 잘 보이게 수정 */
+  --neon: rgba(255, 183, 178, 0.3);
+  --disc-opacity: 0.4;
 }
 
-/* 🍫 묵직하고 따뜻한 다크 모드 */
+/* 🍫 묵직한 다크 모드 */
 :root[data-theme="dark"] {
   --bg: #141211;
   --card: #1e1b19;
@@ -40,11 +37,8 @@
   --accent: #b8c9e5;
   --gradient-start: #88808c;
   --gradient-end: #a8a0b0;
-  
-  /* 다크모드 주파수 */
-  --eq-start: #a18cd1;         
+  --eq-start: #a18cd1;
   --eq-end: #fbc2eb;
-  
   --tag-bg: #292422;
   --tag-text: #e0d7cf;
   --shadow: rgba(0, 0, 0, 0.5);
@@ -52,23 +46,210 @@
   --disc-opacity: 0.25;
 }
 
-/* (이하 기존 CSS 구조와 동일하므로 주요 수정된 부분인 Wave 관련 부분만 발췌) */
-
-.card-wave span {
-  display: block;
-  width: 3px;
-  background: var(--eq-start); /* 👈 기본색을 파스텔 톤으로 설정 */
-  opacity: var(--disc-opacity);
-  border-radius: 2px;
-  transition: 0.3s ease;
-}
-
-.song-item:hover .card-wave span, .song-item:active .card-wave span {
-  background: linear-gradient(to top, var(--eq-start), var(--eq-end));
-  opacity: 1;
-  animation: waveBeat 0.6s infinite alternate;
-  box-shadow: 0 0 6px var(--eq-start); /* 👈 파스텔 빛이 은은하게 퍼지도록 수정 */
-}
-
-/* ... (기타 하단 동일) */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 24px 16px 50px; transition: 0.4s; }
+.container { max-width: 680px; margin: 0 auto; }
+.header { text-align: center; margin: 15px 0 35px; }
+.header h1 { font-size: 32px; font-weight: 900; background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.search-box input { width: 100%; background: var(--card); border: 1px solid var(--line); color: var(--text); padding: 18px 20px; border-radius: 16px; margin-bottom: 24px; outline: none; }
+.song-item { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 20px; margin-bottom: 14px; position: relative; transition: 0.3s; }
+.artist { font-size: 14px; font-weight: 800; color: var(--accent); margin-bottom: 12px; }
+.songs-container { display: flex; flex-wrap: wrap; gap: 8px; margin-right: 50px; }
+.song-tag { background: var(--tag-bg); color: var(--tag-text); padding: 6px 12px; border-radius: 8px; font-size: 13px; font-weight: 600; }
+.card-wave { display: flex; gap: 3px; position: absolute; right: 20px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.card-wave span { width: 3px; height: 15px; background: var(--eq-start); opacity: var(--disc-opacity); border-radius: 2px; }
+.song-item:hover .card-wave span { animation: waveBeat 0.6s infinite alternate; opacity: 1; }
+@keyframes waveBeat { 0% { height: 10px; } 100% { height: 35px; } }
 </style>
+</head>
+<body>
+<div class="container">
+  <div class="header"><h1>🎵 황시현 PLAY LIST 🎵</h1></div>
+  <div class="search-box"><input type="text" id="searchInput" placeholder="가수 또는 노래 제목 검색..." oninput="filterSongs()"></div>
+  <div id="playlist"></div>
+</div>
+
+<script>
+const playlistData = [
+  { artist: "강승윤", songs: "본능적으로" },
+  { artist: "구윤회", songs: "Marry Me" },
+  { artist: "길구봉구", songs: "이별" },
+  { artist: "김건모", songs: "서울의 달 / 이별이 준 선물/ 빗속의 연인 / 미안해요 / 청첩장" },
+  { artist: "김광석(故)", songs: "서른즈음에" },
+  { artist: "김기태", songs: "비연" },
+  { artist: "김동률", songs: "감사 / 기억의 습작" },
+  { artist: "김범수", songs: "끝사랑" },
+  { artist: "김연우", songs: "이별택시 / You Are My Love" },
+  { artist: "김영근", songs: "탈진" },
+  { artist: "김정훈", songs: "상처" },
+  { artist: "김필", songs: "기댈곳 / 괴수 / 다시 사랑한다면" },
+  { artist: "나비", songs: "길에서" },
+  { artist: "나윤권", songs: "나였으면" },
+  { artist: "너드커넥션", songs: "그대만 있다면" },
+  { artist: "노블레스", songs: "음악이 싫어졌어" },
+  { artist: "노을", songs: "그리워 그리워 / 살기 위해서 / 전부 너였다 / 청혼" },
+  { artist: "닐로", songs: "넋두리 / 되돌리고 싶다 / 지나오다" },
+  { artist: "다비치", songs: "모르시나요" },
+  { artist: "더 레이", songs: "청소" },
+  { artist: "더네임", songs: "그녀를 찾아주세요" },
+  { artist: "델리스파이스", songs: "고백" },
+  { artist: "드렁큰타이거", songs: "편의점" },
+  { artist: "뜨거운 감자", songs: "시소" },
+  { artist: "린", songs: "시간을 거슬러" },
+  { artist: "마크튭", songs: "비로소 너에게 도착했다" },
+  { artist: "먼데이키즈", songs: "사랑이 식었다고 말해도 돼 / 이런 남자" },
+  { artist: "멜로망스", songs: "선물 / 입맞춤 / 짙어져" },
+  { artist: "모세", songs: "사랑인걸" },
+  { artist: "문문", songs: "결혼 / 비행운" },
+  { artist: "문명진", songs: "하루하루" },
+  { artist: "미키드", songs: "미친 존재감" },
+  { artist: "바이브", songs: "가을 타나 봐 / 별이 빛나는 밤에 / 속도 모르고 / 술이야" },
+  { artist: "박보검", songs: "내 사람" },
+  { artist: "박원", songs: "all of my life / 노력" },
+  { artist: "박용하(故)", songs: "처음 그날처럼 (올인 OST)" },
+  { artist: "박장현", songs: "한숨" },
+  { artist: "박중훈", songs: "비와 당신" },
+  { artist: "박진영", songs: "When We Disco / 어머님이 누구니" },
+  { artist: "박효신", songs: "눈의 꽃 / 바보 / 좋은 사람" },
+  { artist: "범키", songs: "미친연애" },
+  { artist: "벤", songs: "안갯길" },
+  { artist: "부활", songs: "Never Ending Story" },
+  { artist: "브라운 아이드 소울", songs: "Brown City" },
+  { artist: "브리즈", songs: "뭐라할까" },
+  { artist: "블루(BLOO)", songs: "Downtown Baby" },
+  { artist: "비스트", songs: "비가 오는 날엔" },
+  { artist: "빅뱅", songs: "Forever With You / This Love" },
+  { artist: "산들", songs: "취기를 빌려" },
+  { artist: "서영은", songs: "너에게로 또 다시 / 내 안의 그대" },
+  { artist: "선우정아", songs: "도망가자" },
+  { artist: "성시경", songs: "한번 더 이별 / 태양계 / 희재" },
+  { artist: "샤이니", songs: "너와 나의 거리" },
+  { artist: "소울스타", songs: "비극" },
+  { artist: "손디아", songs: "어른" },
+  { artist: "송가인", songs: "서울의 달" },
+  { artist: "송민호", songs: "몸" },
+  { artist: "송필근", songs: "숙녀에게" },
+  { artist: "숀(SHAUN)", songs: "Way Back Home" },
+  { artist: "스탠딩 에그", songs: "오래된 노래 / Little Star" },
+  { artist: "스트레이", songs: "너, 너" },
+  { artist: "시아준수", songs: "사랑은 눈꽃처럼" },
+  { artist: "심규선", songs: "아라리" },
+  { artist: "심수봉", songs: "사랑밖에 난 몰라" },
+  { artist: "씨엔블루", songs: "사랑빛" },
+  { artist: "아이유", songs: "나만 몰랐던 이야기" },
+  { artist: "아이콘(iKON)", songs: "AIRPLANE" },
+  { artist: "안예은", songs: "홍연 / 상사화" },
+  { artist: "안재욱", songs: "Forever" },
+  { artist: "애쉬그레이", songs: "결혼" },
+  { artist: "에이치코드(H:CODE)", songs: "꿈속의 너" },
+  { artist: "에일리", songs: "첫눈처럼 너에게 가겠다" },
+  { artist: "엔", songs: "암연" },
+  { artist: "영호", songs: "연락하지마" },
+  { artist: "오반", songs: "불면" },
+  { artist: "오왠", songs: "Loser / 오늘" },
+  { artist: "오혁", songs: "소녀" },
+  { artist: "울랄라세션", songs: "서쪽하늘 / 아름다운 밤" },
+  { artist: "원모어찬스", songs: "널 생각해" },
+  { artist: "원티드", songs: "발작" },
+  { artist: "어반자카파", songs: "널 사랑하지 않아" },
+  { artist: "어쿠스틱 콜라보", songs: "묘해, 너와" },
+  { artist: "유성은", songs: "마리화나" },
+  { artist: "유해준", songs: "미치게 그리워서" },
+  { artist: "윤도현(YB)", songs: "담배가게 아가씨 / 나는 나비 / 박하사탕 / 나 항상 그대를" },
+  { artist: "윤현상", songs: "이별 참 못할 짓이더라" },
+  { artist: "이선희", songs: "인연 / 그중에 그대를 만나 / 추억의 책장을 넘기면" },
+  { artist: "이소라", songs: "처음 느낌 그대로" },
+  { artist: "이승기", songs: "내 여자라니까 / 사랑이 술을 가르쳐 / 삭제 / 제발" },
+  { artist: "이승철", songs: "말리꽃 / 서쪽하늘" },
+  { artist: "이승환", songs: "당부 / 어떻게 사랑이 그래요" },
+  { artist: "이적", songs: "걱정말아요 그대 / 거짓말 거짓말 거짓말 / 하늘을 달리다" },
+  { artist: "이정", songs: "그대만 보며" },
+  { artist: "이준호", songs: "퇴근 버스" },
+  { artist: "이진재", songs: "내가 다 미안해" },
+  { artist: "이루", songs: "까만안경" },
+  { artist: "임세준", songs: "오늘은 가지마" },
+  { artist: "임재범", songs: "너를 위해 / 낙인 / 고해 / 사랑보다 깊은 상처" },
+  { artist: "임재현", songs: "사랑에 연습이 있었다면 / 조금 취했어" },
+  { artist: "임창정", songs: "그때 또 다시 / 나란놈이란 / 날 닮은 너 / 내가 저지른 사랑 / 소주 한 잔 / 흔한 노래 / 너를 너로써 / 오랜만이야" },
+  { artist: "임한별", songs: "이별하러 가는 길" },
+  { artist: "장범준", songs: "흔들리는 꽃들 속에서..." },
+  { artist: "잔나비", songs: "사랑하긴 했었나요..스치는 인연이었나요" },
+  { artist: "장덕철", songs: "그날처럼 / 알았다면" },
+  { artist: "정동하", songs: "추억은 만남보다 이별에 남아" },
+  { artist: "정승환", songs: "너였다면 / 사랑에 빠지고 싶다" },
+  { artist: "정준일", songs: "안아줘" },
+  { artist: "정키", songs: "잊혀지다" },
+  { artist: "정키 & 양다일", songs: "우린 알아" },
+  { artist: "적재", songs: "Lullaby" },
+  { artist: "진원", songs: "고칠게" },
+  { artist: "조장혁", songs: "중독된 사랑 / Love Is Over" },
+  { artist: "조수미", songs: "나가거든" },
+  { artist: "죠지", songs: "좋아해" },
+  { artist: "주시크(Joosiq)", songs: "너를 생각해" },
+  { artist: "종현", songs: "하루의 끝" },
+  { artist: "차태현", songs: "이차선 다리" },
+  { artist: "크러쉬", songs: "Hug Me" },
+  { artist: "태양", songs: "나만 바라봐 / 눈, 코, 입" },
+  { artist: "토이(Toy/김연우)", songs: "여전히 아름다운지" },
+  { artist: "팀(Tim)", songs: "사랑합니다" },
+  { artist: "피아노맨", songs: "뻔한 발라드" },
+  { artist: "포맨(4Men)", songs: "Baby Baby / Say I Love You / 고백 / 못해 / 뭐해? / 사랑해도 괜찮니 / 후회한다" },
+  { artist: "포지션", songs: "I Love You" },
+  { artist: "프리스타일", songs: "Y / 그리고 그 후" },
+  { artist: "필(Feel)", songs: "취중고백" },
+  { artist: "하동균", songs: "그녀를 사랑해줘요" },
+  { artist: "하림", songs: "난치병" },
+  { artist: "하현우", songs: "돌덩이" },
+  { artist: "하은", songs: "열애중" },
+  { artist: "한동근", songs: "이 소설의 끝을 다시 써보려 해 / 그대라는 사치" },
+  { artist: "허각", songs: "Hello / 나를 사랑했던 사람아 / 죽고 싶단 말 밖에 / 행복한 나를 / 향기만 남아 / 한사람" },
+  { artist: "현빈", songs: "그 남자" },
+  { artist: "홍이삭", songs: "I Love You" },
+  { artist: "홍진영", songs: "사랑의 배터리 / 안돼요" },
+  { artist: "황인욱", songs: "취하고 싶다 / 포장마차" },
+  { artist: "황치열", songs: "매일 듣는 노래" },
+  { artist: "휘성", songs: "가슴 시린 이야기 / With Me / 결혼까지 생각했어 / 사랑... 그 몹쓸 병 / 살아서도 죽어서도" },
+  { artist: "10cm", songs: "봄이 좋냐? / 사랑은 은하수 다방에서 / 스토커 / 아메리카노 / 안아줘요 / 애상 / 죽겠네 / KINGSTAR / PET" },
+  { artist: "2AM", songs: "이 노래 / 죽어도 못 보내 / 친구의 고백" },
+  { artist: "2BIC(투빅)", songs: "나이기를 / 요즘 바쁜가봐" },
+  { artist: "40(포티)", songs: "봄을 노래하다 / 듣는편지" },
+  { artist: "BE'O(비오)", songs: "문득" },
+  { artist: "DEAN(딘)", songs: "D / instagram" },
+  { artist: "DK(디셈버)", songs: "나와 헤어진 걸 다행이라 생각할 수 있게" },
+  { artist: "FT아일랜드", songs: "지독하게" },
+  { artist: "izi(이지)", songs: "응급실" },
+  { artist: "JK김동욱", songs: "미련한 사랑" },
+  { artist: "K.WILL(케이윌)", songs: "눈물이 뚝뚝 / 이러지마 제발" },
+  { artist: "M TO M(엠투엠)", songs: "사랑한다 말해줘 / 이름" },
+  { artist: "M.N.J(엠엔제이)", songs: "후애" },
+  { artist: "M.Street(엠스트리트)", songs: "For My Love" },
+  { artist: "MC THE MAX(엠씨더맥스)", songs: "그대는 눈물겹다 / 해바라기도 가끔 목이 아프죠 / 서시" },
+  { artist: "SG워너비", songs: "Timeless / STAY / 다른 사랑 만나도 / 광 / 사랑하길 정말 잘했어요 / 살다가" },
+  { artist: "Spapa(에스파파)", songs: "참 다행이다" },
+  { artist: "V.O.S(브이오에스)", songs: "부디" },
+  { artist: "V.One(브이원)", songs: "그런가봐요 / 면도 " },
+  { artist: "WOODZ(우즈)", songs: "AMNESIA" }
+];
+
+function render(data) {
+  const container = document.getElementById("playlist");
+  container.innerHTML = data.map(item => `
+    <div class="song-item">
+      <div class="artist">🎵 ${item.artist}</div>
+      <div class="songs-container">
+        ${item.songs.split("/").map(s => `<span class="song-tag">${s.trim()}</span>`).join("")}
+      </div>
+      <div class="card-wave"><span></span><span></span><span></span></div>
+    </div>
+  `).join("");
+}
+
+function filterSongs() {
+  const keyword = document.getElementById("searchInput").value.toLowerCase();
+  render(playlistData.filter(i => i.artist.toLowerCase().includes(keyword) || i.songs.toLowerCase().includes(keyword)));
+}
+
+render(playlistData);
+</script>
+</body>
+</html>
