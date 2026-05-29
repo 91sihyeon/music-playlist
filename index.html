@@ -6,52 +6,71 @@
 <title>🎵 황시현 PLAY LIST 🎵</title>
 
 <style>
-
-/* 방송 화면 환경에 최적화된 묵직하고 선명한 다크 모드 */
-:root[data-theme="dark"] {
-  --bg:#090b0e;
-  --card:#14171f;
-  --card-hover:#1e222e;
-  --text:#ffffff;
-  --sub:#9fa8b7;
-  --line:#262c3a;
-  --accent:#9d82ff;
-  --gradient-start:#c3b0ff;
-  --gradient-end:#6e4aff;
-  --tag-bg:#222735;
-}
-
-/* 화사하고 깨끗한 라이트 모드 */
+/* 기본으로 적용될 고급스러운 딥 네이비 라이트 모드 */
 :root[data-theme="light"] {
-  --bg:#f4f6fa;
-  --card:#ffffff;
-  --card-hover:#ebedf3;
-  --text:#1e2229;
-  --sub:#656e7b;
-  --line:#dce1e9;
-  --accent:#633eff;
-  --gradient-start:#8b6cff;
-  --gradient-end:#4a23eb;
-  --tag-bg:#e8ebf2;
+  --bg: #f1f4f9;               /* 은은한 네이비 빛이 감도는 세련된 배경색 */
+  --card: #ffffff;             /* 깔끔한 화이트 카드 */
+  --card-hover: #e9eef7;       /* 마우스 올렸을 때 부드러운 네이비 블루 */
+  --text: #0f141c;             /* 본문 글자색: 거의 검은색에 가까운 초고밀도 네이비 */
+  --sub: #566171;              /* 서브 글자색: 차분한 네이비 그레이 */
+  --line: #dbdfeb;             /* 경계선: 연하고 깔끔한 라인 */
+  
+  /* 💙 네이비 그라데이션 효과를 내는 핵심 컬러 */
+  --accent: #15305b;           /* 가수 이름: 깊고 선명한 클래식 딥 네이비 */
+  --gradient-start: #0a1931;   /* 상단 제목 시작: 묵직한 미드나잇 네이비 */
+  --gradient-end: #1e3d6b;     /* 상단 제목 끝: 청량하고 세련된 로열 네이비 */
+  
+  /* ⚡ 이퀄라이저 및 우측 파형 포인트 컬러 (라이트모드) */
+  --eq-start: #00d2ff;         /* 청량한 네온 사이언 블루 */
+  --eq-end: #00f2fe;           /* 밝고 트렌디한 민트 블루 */
+  
+  --tag-bg: #f0f3f8;           /* 노래 태그 배경 */
+  --tag-text: #2c3a4f;         /* 노래 태그 글자색: 톤다운된 네이비 */
+  --shadow: rgba(15, 20, 28, 0.04);
+  --neon: transparent;
+  --disc-opacity: 0.15;        /* 파형 기본 투명도 */
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+/* 선택 시 전환되는 방송용 묵직한 네이비 다크 모드 */
+:root[data-theme="dark"] {
+  --bg: #070a10;               /* 심해처럼 깊은 네이비 블랙 */
+  --card: #111622;             /* 다크 네이비 카드 */
+  --card-hover: #192133;       /* 밝아지는 네이비 카드 */
+  --text: #ffffff;
+  --sub: #8593a6;
+  --line: #20293a;
+  --accent: #9cb6df;           /* 다크모드 강조색: 부드러운 파스텔 네이비 블루 */
+  --gradient-start: #e2ecf8;
+  --gradient-end: #9cb6df;
+  
+  /* ⚡ 이퀄라이저 및 우측 파형 포인트 컬러 (다크모드) */
+  --eq-start: #00f2fe;         
+  --eq-end: #4facfe;           /* 다크모드에서는 조금 더 짙고 선명한 네온 블루 */
+  
+  --tag-bg: #1b2436;
+  --tag-text: #cbd5e1;
+  --shadow: rgba(0, 0, 0, 0.4);
+  --neon: rgba(156, 182, 223, 0.15);
+  --disc-opacity: 0.25;
 }
 
-body{
-  background:var(--bg);
-  color:var(--text);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-  padding:18px 14px 40px;
-  transition: background 0.3s ease, color 0.3s ease;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.container{
-  max-width:720px;
-  margin:0 auto;
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding: 24px 16px 50px;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
   position: relative;
 }
 
@@ -59,193 +78,271 @@ body{
 .top-controls {
   display: flex;
   justify-content: flex-end;
-  margin-bottom: 5px;
+  margin-bottom: 12px;
 }
 
 .theme-toggle-btn {
   background: var(--card);
   border: 1px solid var(--line);
   color: var(--text);
-  padding: 8px 14px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: bold;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 700;
   cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  transition: 0.2s ease;
+  box-shadow: 0 4px 6px var(--shadow);
+  transition: 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .theme-toggle-btn:hover {
   background: var(--card-hover);
   border-color: var(--accent);
+  box-shadow: 0 0 12px var(--neon);
 }
 
-.header{
-  text-align:center;
-  margin:10px 0 28px;
+/* 헤더 디자인: 미드나잇 딥 네이비 그라데이션 및 이퀄라이저 */
+.header {
+  text-align: center;
+  margin: 15px 0 35px;
+  position: relative;
 }
 
-.header h1{
-  font-size:30px;
-  font-weight:900;
-  letter-spacing:-0.7px;
-
-  background:linear-gradient(
-    135deg,
-    var(--gradient-start),
-    var(--gradient-end)
-  );
-
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
-
-  filter:drop-shadow(
-    0 3px 10px rgba(123,92,255,.25)
-  );
+.header-title-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
 }
 
-.header::after{
-  content:'';
-  display:block;
-
-  width:68px;
-  height:4px;
-
-  margin:14px auto 0;
-
-  border-radius:999px;
-
-  background:linear-gradient(
-    90deg,
-    var(--gradient-start),
-    var(--gradient-end)
-  );
+.header h1 {
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 2px 4px var(--neon));
 }
 
-.search-box{
-  margin-bottom:18px;
+/* 상단 미니 오디오 이퀄라이저 */
+.equalizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  width: 24px;
+  height: 24px;
 }
 
-.search-box input{
-  width:100%;
+.equalizer span {
+  display: block;
+  width: 4px;
+  background: linear-gradient(to top, var(--eq-start), var(--eq-end));
+  animation: bounce 0.8s infinite alternate;
+  border-radius: 2px;
+  box-shadow: 0 0 4px var(--eq-start);
+}
+.equalizer span:nth-child(2) { animation-delay: 0.2s; animation-duration: 0.5s; }
+.equalizer span:nth-child(3) { animation-delay: 0.4s; animation-duration: 0.7s; }
 
-  background:var(--card);
-  border:1px solid var(--line);
-
-  color:var(--text);
-
-  padding:16px 18px;
-
-  border-radius:12px;
-
-  font-size:14px;
-
-  outline:none;
-
-  transition:.2s;
+@keyframes bounce {
+  0% { height: 4px; }
+  100% { height: 22px; }
 }
 
-.search-box input:focus{
-  border-color:var(--accent);
-
-  box-shadow:
-    0 0 0 4px rgba(123,92,255,.15);
+.header::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 4px;
+  margin: 16px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
 }
 
-.playlist{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
+/* 검색창 디자인 */
+.search-box {
+  margin-bottom: 24px;
 }
 
-.song-item{
-  background:var(--card);
-  border:1px solid var(--line);
-  border-radius:12px;
-  padding:14px 16px;
-  transition:.18s ease, background 0.3s ease, border-color 0.3s ease;
+.search-box input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 18px 20px;
+  border-radius: 16px;
+  font-size: 15px;
+  font-weight: 600;
+  outline: none;
+  box-shadow: 0 4px 10px var(--shadow);
+  transition: 0.3s ease;
 }
 
-.song-item:hover{
-  background:var(--card-hover);
-  border-color:var(--accent);
-  transform:translateY(-2px);
+.search-box input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(21, 48, 91, 0.1), 0 4px 14px var(--neon);
 }
 
-.artist{
-  font-size:11px;
-  font-weight:700;
-  color:var(--sub);
-  margin-bottom:8px;
-  letter-spacing:.4px;
+/* 플레이리스트 목록 카드 디자인 */
+.playlist {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
-.songs-container{
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-  width:100%;
+.song-item {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 4px 12px var(--shadow);
+  position: relative;
+  overflow: hidden;
+  transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.song-tag{
-  background:var(--tag-bg);
-  color:var(--text);
-  font-size:13px;
-  font-weight:700;
-  padding:7px 11px;
-  border-radius:6px;
-  line-height:1.4;
-  border:1px solid rgba(255,255,255,.03);
+/* ⚡ 카드 우측 배경에 들어가는 임팩트 있는 '오디오 주파수 파형(Wave)' 컨테이너 */
+.card-wave {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 40px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 주파수 막대기 개별 디자인 (기본 상태는 차분한 테마색 반영) */
+.card-wave span {
+  display: block;
+  width: 3px;
+  background: var(--sub);
+  opacity: var(--disc-opacity);
+  border-radius: 2px;
+  transition: 0.3s ease;
+}
+
+/* 주파수 파형을 들쭉날쭉 오디오 볼륨 커브 형태로 배치 */
+.card-wave span:nth-child(1) { height: 10px; }
+.card-wave span:nth-child(2) { height: 25px; }
+.card-wave span:nth-child(3) { height: 15px; }
+.card-wave span:nth-child(4) { height: 35px; }
+.card-wave span:nth-child(5) { height: 20px; }
+.card-wave span:nth-child(6) { height: 30px; }
+.card-wave span:nth-child(7) { height: 12px; }
+
+/* 마우스를 올렸을 때 전체 카드 액션 */
+.song-item:hover {
+  background: var(--card-hover);
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(15, 20, 28, 0.08), 0 0 15px var(--neon);
+}
+
+/* ⚡ 마우스를 올리면 주파수가 네온 컬러로 켜지며 역동적으로 비트를 타기 시작함 */
+.song-item:hover .card-wave span {
+  background: linear-gradient(to top, var(--eq-start), var(--eq-end));
+  opacity: 1;
+  animation: waveBeat 0.6s infinite alternate;
+  box-shadow: 0 0 4px var(--eq-start);
+}
+
+/* 막대마다 애니메이션 속도와 딜레이를 다르게 주어 리얼한 비트감 연출 */
+.song-item:hover .card-wave span:nth-child(1) { animation-delay: 0.1s; animation-duration: 0.4s; }
+.song-item:hover .card-wave span:nth-child(2) { animation-delay: 0.3s; animation-duration: 0.5s; }
+.song-item:hover .card-wave span:nth-child(3) { animation-delay: 0.0s; animation-duration: 0.3s; }
+.song-item:hover .card-wave span:nth-child(4) { animation-delay: 0.4s; animation-duration: 0.6s; }
+.song-item:hover .card-wave span:nth-child(5) { animation-delay: 0.2s; animation-duration: 0.4s; }
+.song-item:hover .card-wave span:nth-child(6) { animation-delay: 0.5s; animation-duration: 0.5s; }
+.song-item:hover .card-wave span:nth-child(7) { animation-delay: 0.1s; animation-duration: 0.3s; }
+
+@keyframes waveBeat {
+  0% { transform: scaleY(1); }
+  100% { transform: scaleY(0.4); } /* 위아래로 역동적으로 압축/이완 */
+}
+
+/* 아티스트 표시 */
+.artist {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--accent); 
+  margin-bottom: 12px;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.songs-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 80%; /* 파형과 겹치지 않도록 너비 확보 */
+  position: relative;
+  z-index: 1;
+}
+
+/* 노래 태그 디자인 */
+.song-tag {
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 8px 14px;
+  border-radius: 8px;
+  line-height: 1.4;
+  border: 1px solid rgba(255, 255, 255, 0.05);
   word-break: break-all; 
-  display: inline-block;
-  transition: background 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: 0.2s;
 }
 
-.empty{
-  display:none;
-  text-align:center;
-  color:var(--sub);
-  padding:60px 20px;
+.song-item:hover .song-tag {
+  background: var(--card);
+  color: var(--text);
+  border-color: var(--line);
 }
 
-.footer{
-  margin-top:34px;
-  text-align:center;
-  font-size:11px;
-  color:#6d7483;
+.empty {
+  display: none;
+  text-align: center;
+  color: var(--sub);
+  padding: 80px 20px;
+  font-weight: 600;
 }
 
-@media (max-width:480px){
-
-  body{
-    padding:16px 12px 36px;
-  }
-
-  .header h1{
-    font-size:24px;
-  }
-
-  .search-box input{
-    border-radius:10px;
-  }
-
-  .song-item{
-    padding:13px 14px;
-    border-radius:10px;
-  }
-
-  .artist{
-    font-size:10px;
-  }
-
-  .song-tag{
-    font-size:12px;
-    padding:6px 10px;
-    border-radius:5px;
-  }
-
+.footer {
+  margin-top: 45px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--sub);
+  letter-spacing: 1px;
 }
 
+/* 모바일 대응 화면 */
+@media (max-width: 480px) {
+  body { padding: 16px 12px 40px; }
+  .header h1 { font-size: 26px; }
+  .equalizer { width: 18px; height: 18px; gap: 2px; }
+  @keyframes bounce { 0% { height: 3px; } 100% { height: 16px; } }
+  .search-box input { padding: 15px 16px; font-size: 14px; border-radius: 12px; }
+  .song-item { padding: 14px 16px; border-radius: 12px; }
+  .card-wave { display: none; } /* 화면이 작은 모바일에서는 숨겨서 깔끔하게 유지 */
+  .songs-container { width: 100%; }
+  .artist { font-size: 13px; margin-bottom: 10px; }
+  .song-tag { font-size: 12px; padding: 6px 12px; border-radius: 6px; }
+}
 </style>
 </head>
 
@@ -254,18 +351,22 @@ body{
 <div class="container">
 
   <div class="top-controls">
-    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">☀️ 라이트 모드</button>
+    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">🌙 다크 모드</button>
   </div>
 
   <div class="header">
-    <h1>🎵 황시현 PLAY LIST 🎵</h1>
+    <div class="header-title-wrap">
+      <div class="equalizer"><span></span><span></span><span></span></div>
+      <h1>🎵 황시현 PLAY LIST 🎵</h1>
+      <div class="equalizer"><span></span><span></span><span></span></div>
+    </div>
   </div>
 
   <div class="search-box">
     <input
       type="text"
       id="searchInput"
-      placeholder="가수 또는 노래 제목 검색"
+      placeholder="가수 또는 노래 제목 검색..."
       oninput="filterSongs()"
     />
   </div>
@@ -277,14 +378,13 @@ body{
   </div>
 
   <div class="footer">
-    Made by Hwang Si Hyun
+    © MADE BY HWANG SI HYUN
   </div>
 
 </div>
 
 <script>
-
-// 기본 테마를 라이트 모드로 변경
+// 기본 테마를 라이트 모드로 설정
 document.documentElement.setAttribute('data-theme', 'light');
 
 // 테마 토글 함수
@@ -294,13 +394,14 @@ function toggleTheme() {
   
   if (currentTheme === 'light') {
     document.documentElement.setAttribute('data-theme', 'dark');
-    btn.innerHTML = '☀️ 라이트 모드'; // 다크모드가 되면 '라이트모드로 바꾸는 버튼' 표시
+    btn.innerHTML = '☀️ 라이트 모드';
   } else {
     document.documentElement.setAttribute('data-theme', 'light');
-    btn.innerHTML = '🌙 다크 모드';  // 라이트모드가 되면 '다크모드로 바꾸는 버튼' 표시
+    btn.innerHTML = '🌙 다크 모드';
   }
 }
 
+// 노래 목록 데이터
 const playlistData = [
   { artist: "강승윤", songs: "본능적으로" },
   { artist: "구윤회", songs: "Marry Me" },
@@ -484,13 +585,17 @@ function render(data){
       .map(song => song.trim());
 
     const tagsHTML = songList.map(song =>
-      `<span class="song-tag">${song}</span>`
+      `<span class="song-tag">🎵 ${song}</span>`
     ).join("");
 
+    /* HTML 내부에 동적으로 주파수 막대기들(span)을 생성해 줍니다 */
     div.innerHTML = `
-      <div class="artist">${item.artist}</div>
+      <div class="artist">🎤 ${item.artist}</div>
       <div class="songs-container">
         ${tagsHTML}
+      </div>
+      <div class="card-wave">
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
       </div>
     `;
 
@@ -513,7 +618,6 @@ function filterSongs(){
 }
 
 render(playlistData);
-
 </script>
 
 </body>
