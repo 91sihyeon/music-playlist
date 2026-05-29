@@ -1,9 +1,8 @@
-```html
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>🎵 황시현 Playlist</title>
 
 <style>
@@ -12,150 +11,125 @@
     --card:#ffffff;
     --text:#111827;
     --sub:#6b7280;
-    --main:#6366f1;
     --line:#e5e7eb;
+    --accent:#6366f1;
+}
+
+body.dark{
+    --bg:#0f172a;
+    --card:#1e293b;
+    --text:#f8fafc;
+    --sub:#94a3b8;
+    --line:#334155;
+    --accent:#818cf8;
 }
 
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:
-    Pretendard,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
 }
 
 body{
     background:var(--bg);
     color:var(--text);
-    padding:20px 14px 60px;
-    display:flex;
-    justify-content:center;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    transition:.3s;
 }
 
 .container{
-    width:100%;
-    max-width:520px;
+    max-width:700px;
+    margin:auto;
+    padding:20px 16px 60px;
+}
+
+.top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
 }
 
 h1{
-    text-align:center;
-    font-size:30px;
+    font-size:28px;
     font-weight:800;
-    margin-bottom:24px;
-    letter-spacing:-0.5px;
 }
 
-.search-box{
-    position:relative;
-    margin-bottom:14px;
-}
-
-.search-box input{
-    width:100%;
-    padding:16px 18px 16px 50px;
+.theme-btn{
     border:none;
-    border-radius:16px;
-    background:white;
+    background:var(--card);
+    border:1px solid var(--line);
+    color:var(--text);
+    padding:10px 14px;
+    border-radius:12px;
+    cursor:pointer;
+    font-size:15px;
+}
+
+.search{
+    margin-bottom:22px;
+}
+
+.search input{
+    width:100%;
+    padding:16px;
+    border-radius:14px;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--text);
     font-size:16px;
     outline:none;
-    box-shadow:0 2px 10px rgba(0,0,0,0.05);
 }
 
-.search-box::before{
-    content:"🔍";
-    position:absolute;
-    left:18px;
-    top:50%;
-    transform:translateY(-50%);
-    font-size:18px;
+.section{
+    margin-bottom:26px;
 }
 
-.tabs{
-    display:flex;
-    gap:10px;
-    margin-bottom:18px;
-}
-
-.tab{
-    flex:1;
-    border:none;
-    padding:13px;
-    border-radius:12px;
-    background:#e5e7eb;
-    font-size:15px;
-    font-weight:700;
-    cursor:pointer;
-    transition:0.2s;
-}
-
-.tab.active{
-    background:var(--main);
-    color:white;
-}
-
-.playlist{
-    display:flex;
-    flex-direction:column;
-    gap:12px;
+.section-title{
+    font-size:22px;
+    font-weight:800;
+    margin-bottom:14px;
+    color:var(--accent);
 }
 
 .song{
     background:var(--card);
+    border:1px solid var(--line);
     border-radius:18px;
-    padding:18px;
-    display:flex;
-    align-items:center;
-    gap:14px;
-    box-shadow:0 2px 12px rgba(0,0,0,0.04);
-    transition:0.15s ease;
+    padding:16px;
+    margin-bottom:12px;
+    transition:.2s;
 }
 
 .song:hover{
     transform:translateY(-2px);
 }
 
-.song.new{
-    border-left:5px solid #f59e0b;
-}
-
-.emoji{
-    font-size:24px;
-    flex-shrink:0;
-}
-
-.info{
-    display:flex;
-    flex-direction:column;
-    gap:4px;
-}
-
-.title{
-    font-size:17px;
-    font-weight:700;
-    line-height:1.3;
-}
-
 .artist{
-    color:var(--sub);
+    font-size:18px;
+    font-weight:700;
+    margin-bottom:8px;
+}
+
+.track-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+}
+
+.track{
+    background:rgba(99,102,241,.1);
+    color:var(--text);
+    padding:8px 12px;
+    border-radius:999px;
     font-size:14px;
 }
 
-.no-result{
+.empty{
     text-align:center;
-    padding:40px 20px;
+    padding:50px 20px;
     color:var(--sub);
     display:none;
-}
-
-.footer{
-    text-align:center;
-    margin-top:30px;
-    color:#9ca3af;
-    font-size:13px;
 }
 </style>
 </head>
@@ -164,209 +138,214 @@ h1{
 
 <div class="container">
 
-    <h1>🎵 황시현 Playlist</h1>
+    <div class="top">
+        <h1>🎵 황시현 Playlist</h1>
 
-    <div class="search-box">
-        <input
-            type="text"
-            id="searchInput"
-            placeholder="가수 또는 노래 제목 검색..."
-            oninput="filterSongs()"
-        />
-    </div>
-
-    <div class="tabs">
-        <button class="tab active" id="abcBtn" onclick="changeOrder('abc')">
-            🔤 가나다순
-        </button>
-
-        <button class="tab" id="newBtn" onclick="changeOrder('new')">
-            🆕 최신 추가곡
+        <button class="theme-btn" onclick="toggleDark()">
+            🌙 다크모드
         </button>
     </div>
 
-    <div class="playlist" id="playlist"></div>
+    <div class="search">
+        <input type="text" id="searchInput" placeholder="가수 또는 노래 검색..." oninput="renderPlaylist()">
+    </div>
 
-    <div class="no-result" id="noResult">
+    <div id="playlist"></div>
+
+    <div class="empty" id="empty">
         검색 결과가 없습니다 🥲
-    </div>
-
-    <div class="footer">
-        Made for 황시현 🎤
     </div>
 
 </div>
 
 <script>
 
-const songs = [
+const playlistData = {
+"ㄱ":[
+{artist:"강승윤",songs:["본능적으로"]},
+{artist:"구윤회",songs:["marry me"]},
+{artist:"구창모",songs:["상사화"]},
+{artist:"길구봉구",songs:["이별"]},
+{artist:"김건모",songs:["서울의 달","빗속의 연인","미안해요","이별이 준 선물","청첩장"]},
+{artist:"김기태",songs:["비연"]},
+{artist:"김동률",songs:["감사","기억의 습작"]},
+{artist:"김범수",songs:["끝사랑"]},
+{artist:"김연우",songs:["이별택시","You are my love"]},
+{artist:"김영근",songs:["탈진"]},
+{artist:"김정훈",songs:["상사화"]},
+{artist:"김필",songs:["기댈곳","괴수","다시 사랑한다면"]},
+{artist:"故김광석",songs:["서른즈음에"]}
+],
 
-{ artist:"김동률", title:"감사", isNew:false, date:"2026-01-01" },
-{ artist:"김동률", title:"기억의 습작", isNew:false, date:"2026-01-01" },
-{ artist:"김범수", title:"끝사랑", isNew:false, date:"2026-01-01" },
-{ artist:"김연우", title:"이별택시", isNew:false, date:"2026-01-01" },
-{ artist:"김연우", title:"You Are My Love", isNew:false, date:"2026-01-01" },
-{ artist:"김필", title:"괴수", isNew:false, date:"2026-01-01" },
-{ artist:"김필", title:"기댈 곳", isNew:false, date:"2026-01-01" },
-{ artist:"김필", title:"다시 사랑한다면", isNew:false, date:"2026-01-01" },
+"ㄴ":[
+{artist:"나비",songs:["길에서"]},
+{artist:"나윤권",songs:["나였으면"]},
+{artist:"너드커넥션",songs:["그대만 있다면"]},
+{artist:"노블레스",songs:["음악이 싫어졌어"]},
+{artist:"노을",songs:["그리워 그리워","살기 위해서","전부 너였다","청혼"]},
+{artist:"닐로",songs:["넋두리","되돌리고 싶다","지나오다"]}
+],
 
-{ artist:"나윤권", title:"나였으면", isNew:false, date:"2026-01-01" },
+"ㄷ":[
+{artist:"다비치",songs:["모르시나요"]},
+{artist:"더 레이",songs:["청소"]},
+{artist:"더네임",songs:["그녀를 찾아주세요"]},
+{artist:"델리스파이스",songs:["고백"]},
+{artist:"드렁큰타이거",songs:["편의점"]}
+],
 
-{ artist:"노을", title:"청혼", isNew:false, date:"2026-01-01" },
-{ artist:"노을", title:"그리워 그리워", isNew:false, date:"2026-01-01" },
+"ㅁ":[
+{artist:"마크튭",songs:["비로소 너에게 도착했다"]},
+{artist:"먼데이키즈",songs:["사랑이 식었다고 말해도 돼","이런 남자"]},
+{artist:"멜로망스",songs:["선물","입맞춤","짙어져"]},
+{artist:"모세",songs:["사랑인걸"]},
+{artist:"문문",songs:["결혼","비행운"]},
+{artist:"문명진",songs:["하루하루"]},
+{artist:"미키드",songs:["미친존재감"]}
+],
 
-{ artist:"다비치", title:"모르시나요", isNew:false, date:"2026-01-01" },
+"ㅂ":[
+{artist:"바이브",songs:["가을타나봐","별이 빛나는 밤에","속도모르고","술이야"]},
+{artist:"박보검",songs:["내 사람"]},
+{artist:"박원",songs:["all of my life","노력"]},
+{artist:"박장현",songs:["한숨"]},
+{artist:"박진영",songs:["When We Disco","어머님이 누구니"]},
+{artist:"박효신",songs:["눈의 꽃","바보","좋은 사람"]},
+{artist:"범키",songs:["미친연애"]},
+{artist:"벤",songs:["안갯길"]},
+{artist:"부활",songs:["never ending story"]},
+{artist:"브라운아이드소울",songs:["Brown city"]},
+{artist:"브리즈",songs:["뭐라할까"]},
+{artist:"비스트",songs:["비가 오는 날엔"]},
+{artist:"빅뱅",songs:["Forever with you","This Love"]}
+],
 
-{ artist:"멜로망스", title:"선물", isNew:false, date:"2026-01-01" },
-{ artist:"멜로망스", title:"입맞춤", isNew:false, date:"2026-01-01" },
+"ㅅ":[
+{artist:"산들",songs:["취기를 빌려"]},
+{artist:"샤이니",songs:["너와 나의 거리"]},
+{artist:"서영은",songs:["너에게로 또 다시","내 안의 그대"]},
+{artist:"선우정아",songs:["도망가자"]},
+{artist:"성시경",songs:["한번 더 이별","태양계","희재"]},
+{artist:"소울스타",songs:["비극"]},
+{artist:"손디아",songs:["어른"]},
+{artist:"송민호",songs:["몸"]},
+{artist:"스탠딩에그",songs:["오래된 노래","Little Star"]},
+{artist:"씨엔블루",songs:["사랑빛"]}
+],
 
-{ artist:"박효신", title:"눈의 꽃", isNew:false, date:"2026-01-01" },
-{ artist:"박효신", title:"좋은 사람", isNew:false, date:"2026-01-01" },
+"ㅇ":[
+{artist:"아이유",songs:["나만 몰랐던 이야기"]},
+{artist:"안예은",songs:["홍연","상사화"]},
+{artist:"에일리",songs:["첫눈처럼 너에게 가겠다"]},
+{artist:"오반",songs:["불면"]},
+{artist:"오혁",songs:["소녀"]},
+{artist:"윤도현",songs:["담배가게 아가씨","나는 나비","박하사탕","나 항상 그대를"]},
+{artist:"이선희",songs:["인연","그중에 그대를 만나","추억의 책장을 넘기면"]},
+{artist:"이승기",songs:["내 여자라니까","사랑이 술을 가르쳐","삭제","제발"]},
+{artist:"이적",songs:["걱정말아요 그대","거짓말 거짓말 거짓말","하늘을 달리다"]},
+{artist:"임재범",songs:["너를 위해","낙인","고해","사랑보다 깊은 상처"]},
+{artist:"임창정",songs:["그때 또 다시","나란놈이란","날 닮은 너","내가 저지른 사랑","소주 한 잔","흔한 노래","너를 너로써","오랜만이야"]}
+],
 
-{ artist:"성시경", title:"희재", isNew:false, date:"2026-01-01" },
-{ artist:"성시경", title:"태양계", isNew:false, date:"2026-01-01" },
+"ㅈ":[
+{artist:"잔나비",songs:["사랑하긴 했었나요 스치는 인연이었나요"]},
+{artist:"장덕철",songs:["그날처럼","알았다면"]},
+{artist:"장범준",songs:["흔들리는 꽃들 속에서.."]},
+{artist:"정승환",songs:["너였다면","사랑에 빠지고 싶다"]},
+{artist:"정준일",songs:["안아줘"]},
+{artist:"조장혁",songs:["중독된 사랑","love is over"]},
+{artist:"종현",songs:["하루의 끝"]}
+],
 
-{ artist:"아이유", title:"나만 몰랐던 이야기", isNew:false, date:"2026-01-01" },
+"ㅎ":[
+{artist:"하동균",songs:["그녀를 사랑해줘요"]},
+{artist:"하현우",songs:["돌덩이"]},
+{artist:"허각",songs:["Hello","나를 사랑했던 사람아","죽고 싶단 말 밖에","행복한 나를","향기만 남아","한 사람"]},
+{artist:"현빈",songs:["그 남자"]},
+{artist:"황인욱",songs:["취하고 싶다","포장마차"]},
+{artist:"휘성",songs:["가슴 시린 이야기","With me","결혼까지 생각했어"]}
+],
 
-{ artist:"안예은", title:"홍연", isNew:false, date:"2026-01-01" },
-{ artist:"안예은", title:"상사화", isNew:false, date:"2026-01-01" },
-
-{ artist:"에일리", title:"첫눈처럼 너에게 가겠다", isNew:false, date:"2026-01-01" },
-
-{ artist:"윤도현", title:"나는 나비", isNew:false, date:"2026-01-01" },
-
-{ artist:"이선희", title:"인연", isNew:false, date:"2026-01-01" },
-
-{ artist:"이승기", title:"삭제", isNew:false, date:"2026-01-01" },
-
-{ artist:"이적", title:"하늘을 달리다", isNew:false, date:"2026-01-01" },
-
-{ artist:"임재범", title:"고해", isNew:false, date:"2026-01-01" },
-
-{ artist:"임창정", title:"소주 한 잔", isNew:false, date:"2026-01-01" },
-{ artist:"임창정", title:"내가 저지른 사랑", isNew:false, date:"2026-01-01" },
-
-{ artist:"잔나비", title:"사랑하긴 했었나요", isNew:false, date:"2026-01-01" },
-
-{ artist:"정승환", title:"너였다면", isNew:false, date:"2026-01-01" },
-
-{ artist:"정준일", title:"안아줘", isNew:false, date:"2026-01-01" },
-
-{ artist:"포맨", title:"못해", isNew:false, date:"2026-01-01" },
-
-{ artist:"하동균", title:"그녀를 사랑해줘요", isNew:false, date:"2026-01-01" },
-
-{ artist:"허각", title:"Hello", isNew:false, date:"2026-01-01" },
-
-{ artist:"황인욱", title:"포장마차", isNew:false, date:"2026-01-01" },
-
-{ artist:"10cm (십센치)", title:"스토커", isNew:false, date:"2026-01-01" },
-{ artist:"10cm (십센치)", title:"봄이 좋냐?", isNew:false, date:"2026-01-01" },
-
-{ artist:"DEAN (딘)", title:"Instagram", isNew:false, date:"2026-01-01" },
-
-{ artist:"K.WILL (케이윌)", title:"이러지마 제발", isNew:false, date:"2026-01-01" },
-
-{ artist:"SG워너비", title:"Timeless", isNew:false, date:"2026-01-01" },
-
-{ artist:"mc the max (엠씨더맥스)", title:"서시", isNew:false, date:"2026-01-01" },
-
-{ artist:"홍이삭", title:"I Love You", isNew:true, date:"2026-05-29" },
-{ artist:"김성규", title:"널 떠올리면", isNew:true, date:"2026-05-28" }
-
-];
-
-let currentOrder = "abc";
-
-function renderSongs(list){
-
-    const playlist = document.getElementById("playlist");
-    const noResult = document.getElementById("noResult");
-
-    playlist.innerHTML = "";
-
-    if(list.length === 0){
-        noResult.style.display = "block";
-        return;
-    }
-
-    noResult.style.display = "none";
-
-    list.forEach(song => {
-
-        const item = document.createElement("div");
-
-        item.className = song.isNew ? "song new" : "song";
-
-        item.innerHTML = `
-            <div class="emoji">
-                ${song.isNew ? "🆕" : "🎵"}
-            </div>
-
-            <div class="info">
-                <div class="title">${song.title}</div>
-                <div class="artist">${song.artist}</div>
-            </div>
-        `;
-
-        playlist.appendChild(item);
-
-    });
-
-}
-
-function filterSongs(){
-
-    const query = document
-        .getElementById("searchInput")
-        .value
-        .toLowerCase()
-        .trim();
-
-    let filtered = songs.filter(song =>
-        song.artist.toLowerCase().includes(query) ||
-        song.title.toLowerCase().includes(query)
-    );
-
-    if(currentOrder === "abc"){
-
-        filtered.sort((a,b)=>
-            a.artist.localeCompare(b.artist,'ko')
-        );
-
-    } else {
-
-        filtered.sort((a,b)=>
-            new Date(b.date) - new Date(a.date)
-        );
-
-    }
-
-    renderSongs(filtered);
-
-}
-
-function changeOrder(type){
-
-    currentOrder = type;
-
-    document
-        .getElementById("abcBtn")
-        .classList.toggle("active", type === "abc");
-
-    document
-        .getElementById("newBtn")
-        .classList.toggle("active", type === "new");
-
-    filterSongs();
-}
-
-window.onload = () => {
-    filterSongs();
+"기타":[
+{artist:"10cm",songs:["봄이 좋냐?","사랑은 은하수 다방에서","스토커","아메리카노"]},
+{artist:"2AM",songs:["이 노래","죽어도 못 보내","친구의 고백"]},
+{artist:"DEAN",songs:["D","Instagram"]},
+{artist:"SG워너비",songs:["Timeless","STAY","살다가"]},
+{artist:"mc the max",songs:["그대는 눈물겹다","해바라기도 가끔 목이 아프죠","서시"]}
+]
 };
 
+function renderPlaylist(){
+    const keyword=document.getElementById("searchInput").value.toLowerCase();
+    const wrap=document.getElementById("playlist");
+    const empty=document.getElementById("empty");
+
+    wrap.innerHTML="";
+    let found=false;
+
+    for(const section in playlistData){
+
+        let sectionHTML="";
+
+        playlistData[section].forEach(item=>{
+
+            const artistMatch=item.artist.toLowerCase().includes(keyword);
+
+            const filteredSongs=item.songs.filter(song =>
+                song.toLowerCase().includes(keyword)
+            );
+
+            if(artistMatch || filteredSongs.length>0){
+
+                found=true;
+
+                const showSongs=artistMatch ? item.songs : filteredSongs;
+
+                sectionHTML+=`
+                <div class="song">
+                    <div class="artist">${item.artist}</div>
+
+                    <div class="track-list">
+                        ${showSongs.map(song=>`
+                            <div class="track">${song}</div>
+                        `).join("")}
+                    </div>
+                </div>
+                `;
+            }
+        });
+
+        if(sectionHTML){
+            wrap.innerHTML+=`
+            <div class="section">
+                <div class="section-title">［ ${section} ］</div>
+                ${sectionHTML}
+            </div>
+            `;
+        }
+    }
+
+    empty.style.display=found ? "none" : "block";
+}
+
+function toggleDark(){
+    document.body.classList.toggle("dark");
+
+    if(document.body.classList.contains("dark")){
+        localStorage.setItem("theme","dark");
+    }else{
+        localStorage.setItem("theme","light");
+    }
+}
+
+window.onload=()=>{
+    if(localStorage.getItem("theme")==="dark"){
+        document.body.classList.add("dark");
+    }
+
+    renderPlaylist();
+}
 </script>
 
 </body>
 </html>
-```
