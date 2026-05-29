@@ -4,54 +4,52 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>🎵 황시현 PLAY LIST 🎵</title>
-
 <style>
-:root {
-  --bg: #f7f4eb;
-  --card: #ffffff;
-  --text: #241f1c;
-  --sub: #5c5460;
-  --accent: #2e4468;
-  --tag-bg: #f1ede2;
-  --tag-text: #4a3f38;
-}
-body.dark-mode {
-  --bg: #121212;
-  --card: #1f1f1f;
-  --text: #ffffff;
-  --sub: #e0e0e0;
-  --tag-bg: #3d3d3d;
-  --tag-text: #ffffff;
-}
+:root { --bg: #f7f4eb; --card: #ffffff; --text: #241f1c; --sub: #5c5460; --accent: #2e4468; --eq-start: #ffb7b2; --eq-end: #d1b3ff; --tag-bg: #f1ede2; --tag-text: #4a3f38; }
+body.dark-mode { --bg: #121212; --card: #1f1f1f; --text: #ffffff; --sub: #e0e0e0; --tag-bg: #3d3d3d; --tag-text: #ffffff; }
 body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 15px; transition: 0.3s; }
 .container { max-width: 500px; margin: 0 auto; }
-.header h1 { text-align: center; font-size: 24px; font-weight: 800; margin-bottom: 25px; background: linear-gradient(135deg, #ff9e99 0%, #b892ff 100%); -webkit-background-clip: text; color: transparent; }
-.search-box { margin-bottom: 20px; }
+.header h1 { text-align: center; font-size: 24px; font-weight: 800; margin-bottom: 25px; background: linear-gradient(135deg, #ff9e99 0%, #b892ff 100%); -webkit-background-clip: text; color: transparent; animation: floating 3s infinite ease-in-out; }
+@keyframes floating { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+/* 검색창 스타일 */
+.search-container { margin-bottom: 20px; }
 #searchInput { width: 100%; padding: 12px; border-radius: 20px; border: 1px solid #ccc; background: var(--card); color: var(--text); box-sizing: border-box; }
-.control-box { display: flex; justify-content: flex-end; margin-bottom: 15px; }
-.btn { padding: 8px 15px; border-radius: 15px; border: none; background: #ddd; cursor: pointer; }
+.btn { padding: 8px 15px; border-radius: 15px; border: none; background: #ddd; cursor: pointer; transition: 0.3s; font-size: 14px; }
 body.dark-mode .btn { background: #333; color: #fff; }
+
 .song-item { background: var(--card); border-radius: 15px; padding: 15px; margin-bottom: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
 .artist { font-weight: bold; color: var(--sub); margin-bottom: 8px; font-size: 15px; }
-.artist::before { content: "🎵 "; color: #ff9e99; }
+.artist::before { content: "🎵 "; color: #ffb7b2; } 
+body.dark-mode .artist::before { color: #ff9e99; }
 .song-tag { display: inline-block; background: var(--tag-bg); color: var(--tag-text); padding: 4px 10px; border-radius: 12px; margin-right: 5px; margin-bottom: 5px; font-size: 12px; }
-.top-btn { position: fixed; bottom: 20px; right: 20px; padding: 12px; border-radius: 50%; background: var(--accent); color: white; border: none; cursor: pointer; }
+
+/* 고정 버튼 그룹 (홈 + 위로가기) */
+.fixed-btns { position: fixed; bottom: 20px; right: 20px; display: flex; flex-direction: column; gap: 10px; }
+.circle-btn { width: 45px; height: 45px; border-radius: 50%; background: var(--accent); color: white; border: none; cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
 </style>
 </head>
 <body>
 
 <div class="container">
   <div class="header"><h1>🎵 황시현 PLAY LIST 🎵</h1></div>
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="가수 또는 노래 검색..." onkeyup="filterPlaylist()">
+  
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="가수/노래 검색..." onkeyup="filterPlaylist()">
   </div>
-  <div class="control-box">
-    <button class="btn" onclick="document.body.classList.toggle('dark-mode')">🌙 모드 전환</button>
+
+  <div style="text-align: right; margin-bottom: 15px;">
+    <button id="themeBtn" class="btn" onclick="toggleTheme()">🌙 다크 모드</button>
   </div>
+  
   <div id="playlist"></div>
 </div>
 
-<button class="top-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})">▲</button>
+<!-- 고정 버튼 영역 -->
+<div class="fixed-btns">
+  <button class="circle-btn" onclick="resetPlaylist()" title="홈으로">🏠</button>
+  <button class="circle-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})" title="위로 가기">▲</button>
+</div>
 
 <script>
 const playlistData = [
@@ -113,10 +111,22 @@ const playlistData = [
   { artist: "V.O.S(브이오에스)", songs: "부디" }, { artist: "V.One(브이원)", songs: "그런가봐요 / 면도 " }, { artist: "WOODZ(우즈)", songs: "AMNESIA" }
 ];
 
+function toggleTheme() {
+  const body = document.body;
+  const btn = document.getElementById("themeBtn");
+  body.classList.toggle("dark-mode");
+  btn.innerHTML = body.classList.contains("dark-mode") ? "☀️ 라이트 모드" : "🌙 다크 모드";
+}
+
 function filterPlaylist() {
   const query = document.getElementById("searchInput").value.toLowerCase();
   const filtered = playlistData.filter(item => item.artist.toLowerCase().includes(query) || item.songs.toLowerCase().includes(query));
   render(filtered);
+}
+
+function resetPlaylist() {
+  document.getElementById("searchInput").value = "";
+  render();
 }
 
 function render(data = playlistData) {
