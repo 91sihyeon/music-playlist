@@ -94,7 +94,8 @@ body{
 
   padding:16px 18px;
 
-  border-radius:20px;
+  /* 검색창 라운드 값을 20px -> 12px로 슬림하게 조정 */
+  border-radius:12px;
 
   font-size:14px;
 
@@ -121,7 +122,8 @@ body{
 
   border:1px solid var(--line);
 
-  border-radius:18px;
+  /* 카드 박스 라운드 값을 18px -> 12px로 스마트하게 조정 */
+  border-radius:12px;
 
   padding:14px 16px;
 
@@ -155,7 +157,6 @@ body{
   width:100%;
 }
 
-/* 검색 여부나 곡 개수 상관없이 일관되게 라운드 스타일 유지 */
 .song-tag{
   background:var(--tag-bg);
 
@@ -167,7 +168,8 @@ body{
 
   padding:7px 11px;
 
-  border-radius:10px;
+  /* 개별 노래 태그 라운드 값을 10px -> 6px로 조정 */
+  border-radius:6px;
 
   line-height:1.4;
 
@@ -207,9 +209,14 @@ body{
     font-size:24px;
   }
 
+  /* 모바일 화면에서도 커 보이지 않게 라운드 비율 일치 조정 */
+  .search-box input{
+    border-radius:10px;
+  }
+
   .song-item{
     padding:13px 14px;
-    border-radius:16px;
+    border-radius:10px;
   }
 
   .artist{
@@ -219,6 +226,7 @@ body{
   .song-tag{
     font-size:12px;
     padding:6px 10px;
+    border-radius:5px;
   }
 
 }
