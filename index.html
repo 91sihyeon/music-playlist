@@ -7,17 +7,32 @@
 
 <style>
 
-:root{
-  --bg:#0b0d12;
-  --card:#171a22;
-  --card-hover:#202532;
+/* 방송 화면 환경에 최적화된 묵직하고 선명한 다크 모드 */
+:root[data-theme="dark"] {
+  --bg:#090b0e;
+  --card:#14171f;
+  --card-hover:#1e222e;
   --text:#ffffff;
-  --sub:#8e97a8;
-  --line:#2c3240;
-  --accent:#8b6cff;
-  --gradient-start:#b79cff;
-  --gradient-end:#5a35ff;
-  --tag-bg:#232734;
+  --sub:#9fa8b7;
+  --line:#262c3a;
+  --accent:#9d82ff;
+  --gradient-start:#c3b0ff;
+  --gradient-end:#6e4aff;
+  --tag-bg:#222735;
+}
+
+/* 화사하고 깨끗한 라이트 모드 */
+:root[data-theme="light"] {
+  --bg:#f4f6fa;
+  --card:#ffffff;
+  --card-hover:#ebedf3;
+  --text:#1e2229;
+  --sub:#656e7b;
+  --line:#dce1e9;
+  --accent:#633eff;
+  --gradient-start:#8b6cff;
+  --gradient-end:#4a23eb;
+  --tag-bg:#e8ebf2;
 }
 
 *{
@@ -31,11 +46,38 @@ body{
   color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
   padding:18px 14px 40px;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .container{
   max-width:720px;
   margin:0 auto;
+  position: relative;
+}
+
+/* 상단 화면 모드 선택 컨트롤 */
+.top-controls {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 5px;
+}
+
+.theme-toggle-btn {
+  background: var(--card);
+  border: 1px solid var(--line);
+  color: var(--text);
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+  background: var(--card-hover);
+  border-color: var(--accent);
 }
 
 .header{
@@ -58,7 +100,7 @@ body{
   -webkit-text-fill-color:transparent;
 
   filter:drop-shadow(
-    0 3px 10px rgba(123,92,255,.35)
+    0 3px 10px rgba(123,92,255,.25)
   );
 }
 
@@ -94,7 +136,6 @@ body{
 
   padding:16px 18px;
 
-  /* 검색창 라운드 값을 20px -> 12px로 슬림하게 조정 */
   border-radius:12px;
 
   font-size:14px;
@@ -119,34 +160,23 @@ body{
 
 .song-item{
   background:var(--card);
-
   border:1px solid var(--line);
-
-  /* 카드 박스 라운드 값을 18px -> 12px로 스마트하게 조정 */
   border-radius:12px;
-
   padding:14px 16px;
-
-  transition:.18s ease;
+  transition:.18s ease, background 0.3s ease, border-color 0.3s ease;
 }
 
 .song-item:hover{
   background:var(--card-hover);
-
   border-color:var(--accent);
-
   transform:translateY(-2px);
 }
 
 .artist{
   font-size:11px;
-
   font-weight:700;
-
   color:var(--sub);
-
   margin-bottom:8px;
-
   letter-spacing:.4px;
 }
 
@@ -159,43 +189,29 @@ body{
 
 .song-tag{
   background:var(--tag-bg);
-
   color:var(--text);
-
   font-size:13px;
-
   font-weight:700;
-
   padding:7px 11px;
-
-  /* 개별 노래 태그 라운드 값을 10px -> 6px로 조정 */
   border-radius:6px;
-
   line-height:1.4;
-
   border:1px solid rgba(255,255,255,.03);
-  
   word-break: break-all; 
   display: inline-block;
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 .empty{
   display:none;
-
   text-align:center;
-
   color:var(--sub);
-
   padding:60px 20px;
 }
 
 .footer{
   margin-top:34px;
-
   text-align:center;
-
   font-size:11px;
-
   color:#6d7483;
 }
 
@@ -209,7 +225,6 @@ body{
     font-size:24px;
   }
 
-  /* 모바일 화면에서도 커 보이지 않게 라운드 비율 일치 조정 */
   .search-box input{
     border-radius:10px;
   }
@@ -238,6 +253,10 @@ body{
 
 <div class="container">
 
+  <div class="top-controls">
+    <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleTheme()">☀️ 라이트 모드</button>
+  </div>
+
   <div class="header">
     <h1>🎵 황시현 PLAY LIST 🎵</h1>
   </div>
@@ -264,6 +283,23 @@ body{
 </div>
 
 <script>
+
+// 기본 테마를 방송용 다크모드로 우선 지정
+document.documentElement.setAttribute('data-theme', 'dark');
+
+// 테마 토글 함수
+function toggleTheme() {
+  const currentTheme = document.documentElement.getAttribute('data-theme');
+  const btn = document.getElementById('themeToggleBtn');
+  
+  if (currentTheme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    btn.innerHTML = '🌙 다크 모드';
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    btn.innerHTML = '☀️ 라이트 모드';
+  }
+}
 
 const playlistData = [
   { artist: "구윤회", songs: "Marry Me" },
@@ -433,22 +469,17 @@ const playlist = document.getElementById("playlist");
 const empty = document.getElementById("empty");
 
 function render(data){
-
   playlist.innerHTML = "";
 
   if(data.length === 0){
-
     empty.style.display = "block";
     return;
-
   }
 
   empty.style.display = "none";
 
   data.forEach(item => {
-
     const div = document.createElement("div");
-
     div.className = "song-item";
 
     const songList = item.songs
@@ -461,35 +492,27 @@ function render(data){
 
     div.innerHTML = `
       <div class="artist">${item.artist}</div>
-
       <div class="songs-container">
         ${tagsHTML}
       </div>
     `;
 
     playlist.appendChild(div);
-
   });
-
 }
 
 function filterSongs(){
-
   const keyword = document
     .getElementById("searchInput")
     .value
     .toLowerCase();
 
   const filtered = playlistData.filter(item =>
-
     item.artist.toLowerCase().includes(keyword) ||
-
     item.songs.toLowerCase().includes(keyword)
-
   );
 
   render(filtered);
-
 }
 
 render(playlistData);
