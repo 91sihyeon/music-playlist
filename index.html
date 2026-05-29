@@ -152,8 +152,10 @@ body{
   display:flex;
   flex-wrap:wrap;
   gap:7px;
+  width:100%;
 }
 
+/* 검색 여부나 곡 개수 상관없이 일관되게 라운드 스타일 유지 */
 .song-tag{
   background:var(--tag-bg);
 
@@ -170,16 +172,9 @@ body{
   line-height:1.4;
 
   border:1px solid rgba(255,255,255,.03);
-}
-
-.single-song .song-tag{
-  background:transparent;
-
-  border:none;
-
-  padding:0;
-
-  font-size:15px;
+  
+  word-break: break-all; 
+  display: inline-block;
 }
 
 .empty{
@@ -224,10 +219,6 @@ body{
   .song-tag{
     font-size:12px;
     padding:6px 10px;
-  }
-
-  .single-song .song-tag{
-    font-size:14px;
   }
 
 }
@@ -371,7 +362,7 @@ const playlistData = [
   { artist: "임창정", songs: "그때 또 다시 / 나란놈이란 / 날 닮은 너 / 내가 저지른 사랑 / 소주 한 잔 / 흔한 노래 / 너를 너로써 / 오랜만이야" },
   { artist: "임한별", songs: "이별하러 가는 길" },
   { artist: "장범준", songs: "흔들리는 꽃들 속에서..." },
-  { artist: "잔나비", songs: "사랑하긴 했었나요 스치는 인연이었나요" },
+  { artist: "잔나비", songs: "사랑하긴 했었나요스치는 인연이었나요" },
   { artist: "장덕철", songs: "그날처럼 / 알았다면" },
   { artist: "장현", songs: "빗속의 연인" },
   { artist: "정동하", songs: "추억은 만남보다 이별에 남아" },
@@ -455,10 +446,6 @@ function render(data){
     const songList = item.songs
       .split("/")
       .map(song => song.trim());
-
-    if(songList.length === 1){
-      div.classList.add("single-song");
-    }
 
     const tagsHTML = songList.map(song =>
       `<span class="song-tag">${song}</span>`
