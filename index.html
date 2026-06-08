@@ -56,6 +56,15 @@ body.dark-mode .circle-btn { background: #333; color: #bbb; }
 <div class="container">
   <div class="header"><h1>🎵 황시현 PLAY LIST 🎵</h1></div>
   
+<div class="filter-btns" style="display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 15px; justify-content: center;">
+  <button class="btn" onclick="filterByChosung('ㄱ-ㄷ')">ㄱ-ㄷ</button>
+  <button class="btn" onclick="filterByChosung('ㄹ-ㅂ')">ㄹ-ㅂ</button>
+  <button class="btn" onclick="filterByChosung('ㅅ-ㅇ')">ㅅ-ㅇ</button>
+  <button class="btn" onclick="filterByChosung('ㅈ-ㅎ')">ㅈ-ㅎ</button>
+  <button class="btn" onclick="filterByChosung('ALL')">전체</button>
+</div>
+
+
   <div class="search-container">
     <input type="text" id="searchInput" placeholder="가수/노래 검색..." onkeyup="filterPlaylist()">
   </div>
